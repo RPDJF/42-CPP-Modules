@@ -93,7 +93,7 @@ int	main()
 			search_contact(phonebook);
 		else if (input == "EXIT")
 			exit (0);
-		else if (input.size())
+		else if (!input.empty())
 			std::cout << ERR_WRONG_USAGE << std::endl;
 	}
 }
