@@ -5,7 +5,7 @@ Zombie::Zombie(std::string name) {
 }
 
 Zombie::~Zombie() {
-	std::cout << this->name_ << ":  Mh sir, since I didn't found any food, I guess i'm going to die." << std::endl;
+	std::cout << this->name_ << ":  Mh sir, since I didn't found any food, I guess I'm going to die." << std::endl;
 }
 
 void	Zombie::announce() {
