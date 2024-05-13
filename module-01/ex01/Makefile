@@ -55,7 +55,7 @@ SRC +=	classes/Zombie \
 
 CPPFILES = $(SRC:%=%.cpp)
 
-NAME =	"Moar brainz!"
+NAME =	Moar_brainz!
 
 all: $(NAME)
 
