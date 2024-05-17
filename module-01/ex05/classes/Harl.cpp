@@ -24,7 +24,8 @@ void	Harl::complain(std::string level) {
 	for (int i = 0; levels[i] != ""; i++) {
 		if (levels[i] == level) {
 			(this->*p_levels[i])();
-			break;
+			return;
 		}
 	}
+	std::cout << "There is no such thing !" << std::endl;
 }
