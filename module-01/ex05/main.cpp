@@ -6,7 +6,7 @@ int	main(int argc, char **argv) {
 	Harl harl;
 
 	if (argc != 2) {
-		std::cerr << "Usage: ./harl [debug/info/warning/error]" << std::endl;
+		std::cerr << "Usage: ./harl [DEBUG/INFO/WARNING/ERROR]\n" << std::endl;
 		return 1;
 	}
 	for(int i = 0; argv[1][i]; i++)
