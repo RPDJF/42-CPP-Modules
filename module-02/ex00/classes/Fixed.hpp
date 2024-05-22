@@ -9,7 +9,7 @@ class Fixed {
 		static const int fractionnal_bits_ = 8;
 	public:
 		Fixed();
-		Fixed(Fixed &fixed);
+		Fixed(const Fixed &fixed);
 		Fixed& operator=(const Fixed &assign);
 		~Fixed();
 		int getRawBits() const;
