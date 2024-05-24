@@ -60,7 +60,7 @@ bool Fixed::operator==(const Fixed &assign) const {
 	return false;
 }
 
-bool  Fixed::operator!=(const Fixed &assign) const {
+bool Fixed::operator!=(const Fixed &assign) const {
 	if (this->raw_bits_ != assign.raw_bits_)
 		return true;
 	return false;
@@ -126,7 +126,7 @@ int Fixed::toInt() const {
 }
 
 float Fixed::toFloat() const {
-	return (float)this->raw_bits_ / (1 << this->fractionnal_bits_);
+	return static_cast<float>(this->raw_bits_) / static_cast<float>((1 << this->fractionnal_bits_));
 }
 
 Fixed& min(Fixed &assign1, Fixed &assign2) {
