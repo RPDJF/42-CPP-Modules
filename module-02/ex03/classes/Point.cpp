@@ -37,7 +37,7 @@ bool Point::isOnLine(const Point a, const Point b, const Point point) {
 }
 
 Fixed Point::area(Point const a, Point const b, Point const c) {
-	return (abs(((a.x * (b.y-c.y) + b.x * (c.y-a.y) + c.x * (a.y-b.y))/2).toFloat()));
+	return (fabsf(((a.x * (b.y-c.y) + b.x * (c.y-a.y) + c.x * (a.y-b.y))/2).toFloat()));
 }
 
 bool Point::bsp(Point const a, Point const b, Point const c, Point const point) {
