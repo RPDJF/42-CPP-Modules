@@ -91,11 +91,11 @@ Fixed Fixed::operator--(int) {
 
 //		Arithmetic overloads
 Fixed Fixed::operator+(const Fixed &assign) const {
-	return (Fixed(this->raw_bits_ + assign.raw_bits_));
+	return (Fixed(this->toFloat() + assign.toFloat()));
 }
 
 Fixed Fixed::operator-(const Fixed &assign) const {
-	return (Fixed(this->raw_bits_ + assign.raw_bits_));
+	return (Fixed(this->toFloat() - assign.toFloat()));
 }
 
 Fixed Fixed::operator*(const Fixed &assign) const {
