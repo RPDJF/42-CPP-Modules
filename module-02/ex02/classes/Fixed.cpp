@@ -1,79 +1,123 @@
 #include "Fixed.hpp"
 
+//	CONSTRUCTORS
 Fixed::Fixed() {
-	std::cout << "Default constructor called" << std::endl;
 	this->raw_bits_ = 0;
 }
 
 Fixed::Fixed(const Fixed &fixed) {
-	std::cout << "Copy constructor called" << std::endl;
-	this->raw_bits_ = fixed.getRawBits();
+	this->raw_bits_ = fixed.raw_bits_;
 }
 
 Fixed::Fixed(int value) {
-	std::cout << "Int constructor called" << std::endl;
 	this->raw_bits_ = value << this->fractionnal_bits_;
 }
 
 Fixed::Fixed(float value) {
-	std::cout << "Float constructor called" << std::endl;
-	this->raw_bits_ = std::roundf(value * (1 << this->fractionnal_bits_));
+	this->raw_bits_ = roundf(value * (1 << this->fractionnal_bits_));
 }
 
+//	DECONSTRUCTORS
 Fixed::~Fixed() {
-	std::cout << "Destructor called" << std::endl;
 }
 
+//	OVERLOADS
+//		Assignment overload
 Fixed& Fixed::operator=(const Fixed &assign) {
-	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &assign)
 		this->raw_bits_ = assign.raw_bits_;
 	return *this;
 }
 
-bool operator< (const Fixed &assign1, const Fixed &assign2) {
-	if (assign1.raw_bits_ < assign2.raw_bits_)
+//		Comparaison overloads
+bool Fixed::operator<(const Fixed &assign) const {
+	if (this->raw_bits_ < assign.raw_bits_)
 		return true;
 	return false;
 }
 
-bool operator> (const Fixed &assign1, const Fixed &assign2) {
-	if (assign1.raw_bits_ > assign2.raw_bits_)
+bool Fixed::operator>(const Fixed &assign) const {
+	if (this->raw_bits_ > assign.raw_bits_)
 		return true;
 	return false;
 }
 
-bool operator<= (const Fixed &assign1, const Fixed &assign2) {
-	if (assign1.raw_bits_ <= assign2.raw_bits_)
+bool Fixed::operator<=(const Fixed &assign) const {
+	if (this->raw_bits_ <= assign.raw_bits_)
 		return true;
 	return false;
 }
 
-bool operator>= (const Fixed &assign1, const Fixed &assign2) {
-	if (assign1.raw_bits_ >= assign2.raw_bits_)
+bool Fixed::operator>=(const Fixed &assign) const {
+	if (this->raw_bits_ >= assign.raw_bits_)
 		return true;
 	return false;
 }
 
-bool operator== (const Fixed &assign1, const Fixed &assign2) {
-	if (assign1.raw_bits_ == assign2.raw_bits_)
+bool Fixed::operator==(const Fixed &assign) const {
+	if (this->raw_bits_ == assign.raw_bits_)
 		return true;
 	return false;
 }
 
-bool operator!= (const Fixed &assign1, const Fixed &assign2) {
-	if (assign1.raw_bits_ != assign2.raw_bits_)
+bool  Fixed::operator!=(const Fixed &assign) const {
+	if (this->raw_bits_ != assign.raw_bits_)
 		return true;
 	return false;
 }
 
+//		Increment - decrement overloads
+Fixed& Fixed::operator++() {
+	this->raw_bits_++;
+	return *this;
+}
+
+Fixed Fixed::operator++(int) {
+	Fixed cpy(*this);
+	this->raw_bits_++;
+	return cpy;
+}
+
+Fixed& Fixed::operator--() {
+	this->raw_bits_--;
+	return *this;
+}
+
+Fixed Fixed::operator--(int) {
+	Fixed cpy(*this);
+	this->raw_bits_--;
+	return cpy;
+}
+
+//		Arithmetic overloads
+Fixed Fixed::operator+(const Fixed &assign) const {
+	return (Fixed(this->raw_bits_ + assign.raw_bits_));
+}
+
+Fixed Fixed::operator-(const Fixed &assign) const {
+	return (Fixed(this->raw_bits_ + assign.raw_bits_));
+}
+
+Fixed Fixed::operator*(const Fixed &assign) const {
+	return (Fixed(this->toFloat() * assign.toFloat()));
+}
+
+Fixed Fixed::operator/(const Fixed &assign) const {
+	return (Fixed(this->toFloat() / assign.toFloat()));
+}
+
+//		Stream overloads
+std::ostream& operator<<(std::ostream& stream, const Fixed &fixed) {
+	stream << fixed.toFloat();
+	return (stream);
+}
+
+// MEMBER FUNCTIONS
 int Fixed::getRawBits() const {
-	std::cout << "getRawBits member function called" << std::endl;
 	return this->raw_bits_;
 }
 
 void Fixed::setRawBits(int const raw) {
-	std::cout << "setRawBits member function called" << std::endl;
 	this->raw_bits_ = raw;
 }
 
@@ -107,9 +151,4 @@ const Fixed& Fixed::max(const Fixed &assign1, const Fixed &assign2) {
 	if (assign1 >= assign2)
 		return assign1;
 	return assign2;
-}
-
-std::ostream& operator<<(std::ostream& stream, const Fixed &fixed) {
-	stream << fixed.toFloat();
-	return (stream);
 }
