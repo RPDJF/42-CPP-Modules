@@ -5,10 +5,10 @@
 # include <string>
 
 class ClapTrap {
-    private:
+    protected:
         std::string name_;
         unsigned int hit_pts_;
-        const unsigned int MAX_HIT_PTS_;
+        unsigned int MAX_HIT_PTS_;
         unsigned int energy_pts_;
         unsigned int atk_dmg_;
         bool is_dead_();
