@@ -69,40 +69,45 @@ unsigned int ClapTrap::getAtkDmg() {
 bool ClapTrap::is_dead_() {
     if (this->hit_pts_ == 0) {
         std::cout   << "(ClapTrap) "
- << this->name_ << " is K.O."
+                    << this->name_ << " is K.O."
                     << std::endl;
         return true;
     }
     return false;
 }
 
-void ClapTrap::attack(const std::string& target) {
-    if (this->is_dead_()) {
-        std::cout   << "(ClapTrap) "
- << this->name_ << " couldn't attack."
+bool ClapTrap::has_energy_() {
+    if (this->energy_pts_ == 0) {
+        std::cout   << "(ClavTrap) "
+                    << this->name_ << " has no more energy points."
                     << std::endl;
-    } else if (energy_pts_ == 0) {
+        return false;
+    }
+    return true;
+}
+
+void ClapTrap::attack(const std::string& target) {
+    if (this->is_dead_() || !this->has_energy_()) {
         std::cout   << "(ClapTrap) "
- << this->name_ << " has no more energy points.\n"
                     << this->name_ << " couldn't attack."
                     << std::endl;
-    } else {
-        this->energy_pts_--;
-        std::cout   << "(ClapTrap) "
- << this->name_ << " has attacked " << target << ", causing " << atk_dmg_ << " damage points!\n"
-                    << this->name_ << " has now " << this->energy_pts_ << " energy points."
-                    << std::endl;
+        return ;
     }
+    this->energy_pts_--;
+    std::cout   << "(ClapTrap) "
+                << this->name_ << " has attacked " << target << ", causing " << atk_dmg_ << " damage points!\n"
+                << this->name_ << " has now " << this->energy_pts_ << " energy points."
+                << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
     if (this->is_dead_()) {
         std::cout   << "(ClapTrap) "
- << this->name_ << " has already fainted and could not be targeted for damage."
+                    << this->name_ << " has already fainted and could not be targeted for damage."
                     << std::endl;
     } else if (this->hit_pts_ <= amount) {
         std::cout   << "(ClapTrap) "
- << this->name_ << " has lost " << amount << " HP.\n"
+                    << this->name_ << " has lost " << amount << " HP.\n"
                     << this->name_ << " has no more HP left.\n"
                     << this->name_ << " fainted."
                     << std::endl;
@@ -110,36 +115,31 @@ void ClapTrap::takeDamage(unsigned int amount) {
     } else {
         this->hit_pts_ -= amount;
         std::cout   << "(ClapTrap) "
- << this->name_ << " has lost " << amount << " HP.\n"
+                    << this->name_ << " has lost " << amount << " HP.\n"
                     << this->name_ << " has now " << this->hit_pts_ << " HP left on " << this->MAX_HIT_PTS_
                     << std::endl;
     }
 }
 
 void ClapTrap::beRepaired(unsigned int amount) {
-    if (this->is_dead_()) {
+    if (this->is_dead_() || !this->has_energy_()) {
         std::cout   << "(ClapTrap) "
- << this->name_ << " couldn't be repaired."
-                    << std::endl;
-    } else if (energy_pts_ == 0) {
-        std::cout   << "(ClapTrap) "
- << this->name_ << " has no more energy points.\n"
                     << this->name_ << " couldn't be repaired."
                     << std::endl;
+        return ;
+    }
+    this->energy_pts_--;
+    if (amount + this->hit_pts_ > MAX_HIT_PTS_) {
+        std::cout   << "(ClapTrap) "
+                    << this->name_ << " has been healed of " << this->MAX_HIT_PTS_ - this->hit_pts_ << " HP.\n"
+                    << this->name_ << " has now " << this->MAX_HIT_PTS_ << " HP and " << this->energy_pts_ << " energy points."
+                    << std::endl;
+        this->hit_pts_ = MAX_HIT_PTS_;
     } else {
-        this->energy_pts_--;
-        if (amount + this->hit_pts_ > MAX_HIT_PTS_) {
-            std::cout   << "(ClapTrap) "
-     << this->name_ << " has been healed of " << this->MAX_HIT_PTS_ - this->hit_pts_ << " HP.\n"
-                        << this->name_ << " has now " << this->MAX_HIT_PTS_ << " HP and " << this->energy_pts_ << " energy points."
-                        << std::endl;
-            this->hit_pts_ = MAX_HIT_PTS_;
-        } else {
-            this->hit_pts_ += amount;
-            std::cout   << "(ClapTrap) "
-     << this->name_ << " has been healed of " << amount << " HP.\n"
-                        << this->name_ << " has now " << this->hit_pts_ << " HP and " << this->energy_pts_ << " energy points."
-                        << std::endl;
-        }
+        this->hit_pts_ += amount;
+        std::cout   << "(ClapTrap) "
+                    << this->name_ << " has been healed of " << amount << " HP.\n"
+                    << this->name_ << " has now " << this->hit_pts_ << " HP and " << this->energy_pts_ << " energy points."
+                    << std::endl;
     }
 }

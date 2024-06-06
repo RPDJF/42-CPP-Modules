@@ -12,6 +12,7 @@ class ClapTrap {
         unsigned int energy_pts_;
         unsigned int atk_dmg_;
         bool is_dead_();
+        bool has_energy_();
     public:
         ClapTrap();
         ClapTrap(std::string name);

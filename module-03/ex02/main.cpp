@@ -1,16 +1,17 @@
-#include "classes/ScavTrap.hpp"
+#include "classes/FragTrap.hpp"
 #include <iostream>
 
 int main(void) {
-    ScavTrap Neon("Neon");
-    ScavTrap claptrap;
-    ScavTrap Neon2(Neon);
-    ScavTrap claptrap2 = claptrap;
+    FragTrap Neon("Neon");
+    FragTrap claptrap;
+    FragTrap Neon2(Neon);
+    FragTrap claptrap2 = claptrap;
 
     std::cout << "\nNeon vs Claptrap\n" << std::endl;
 
     for (int i = 0; i < 20; i++) {
         std::cout << "Round " << i + 1 << std::endl;
+        Neon.highFivesGuys();
         Neon.attack(claptrap.getName());
         claptrap.takeDamage(Neon.getAtkDmg());
         claptrap.beRepaired(30);
@@ -24,6 +25,7 @@ int main(void) {
 
     for (int i = 0; i < 20; i++) {
         std::cout << "Round " << i + 1 << std::endl;
+        Neon2.highFivesGuys();
         Neon2.attack(claptrap2.getName());
         claptrap2.takeDamage(Neon2.getAtkDmg());
         claptrap2.beRepaired(30);

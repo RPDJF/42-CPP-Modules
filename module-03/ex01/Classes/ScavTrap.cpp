@@ -51,6 +51,12 @@ ScavTrap& ScavTrap::operator=(ScavTrap& assign) {
 
 //  Member functions
 void ScavTrap::guardGate() {
+    if (this->is_dead_() || !this->has_energy_()) {
+        std::cout   << "(ScavTrap) "
+                    << this->name_ << " couldn't guard gate."
+                    << std::endl;
+        return ;
+    }
     std::cout   << "(ScavTrap) " << this->name_ << " has entered gate keeper mode."
                 << std::endl;
 }
