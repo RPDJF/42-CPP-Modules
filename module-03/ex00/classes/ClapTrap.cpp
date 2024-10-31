@@ -1,26 +1,26 @@
 #include "ClapTrap.hpp"
 
 //  Constructors
-ClapTrap::ClapTrap(): MAX_HIT_PTS_(10) {
-    std::cout   << "(ClapTrap) " << "ClapTrap default constructor has been called."
+ClapTrap::ClapTrap() {
+    std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << "ClapTrap default constructor has been called."
                 << std::endl;
     name_ = "ClapTrap";
     hit_pts_ = MAX_HIT_PTS_;
-    energy_pts_ = 10;
-    atk_dmg_ = 0;
+    energy_pts_ = DF_ENERGY_PTS_;
+    atk_dmg_ = DF_ATK_DMG_;
 }
 
-ClapTrap::ClapTrap(std::string name): MAX_HIT_PTS_(10) {
-    std::cout   << "(ClapTrap) " << "ClapTrap parameter constructor has been called."
+ClapTrap::ClapTrap(const std::string& name) {
+    std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << "ClapTrap name constructor has been called."
                 << std::endl;
     name_ = name;
     hit_pts_ = MAX_HIT_PTS_;
-    energy_pts_ = 10;
-    atk_dmg_ = 0;
+    energy_pts_ = DF_ENERGY_PTS_;
+    atk_dmg_ = DF_ATK_DMG_;
 }
 
-ClapTrap::ClapTrap(ClapTrap& copy): MAX_HIT_PTS_(10) {
-    std::cout   << "(ClapTrap) " << "ClapTrap copy constructor has been called."
+ClapTrap::ClapTrap(const ClapTrap& copy) {
+    std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << "ClapTrap copy constructor has been called."
                 << std::endl;
     this->name_ = copy.name_;
     this->hit_pts_ = copy.hit_pts_;
@@ -30,13 +30,13 @@ ClapTrap::ClapTrap(ClapTrap& copy): MAX_HIT_PTS_(10) {
 
 //  Deconstructors
 ClapTrap::~ClapTrap() {
-    std::cout   << "(ClapTrap) " << this->name_ << " was not the impostor."
+    std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << this->name_ << " was not the impostor."
                 << std::endl;
 }
 
 //  Operator overloads
 //      Equal operator
-ClapTrap& ClapTrap::operator=(ClapTrap& assign) {
+ClapTrap& ClapTrap::operator=(const ClapTrap& assign) {
     if (this == &assign)
         return *this;
     else {
@@ -49,7 +49,7 @@ ClapTrap& ClapTrap::operator=(ClapTrap& assign) {
 }
 
 //  Getters member functions
-std::string ClapTrap::getName() {
+const std::string& ClapTrap::getName() {
     return this->name_;
 }
 
@@ -68,7 +68,7 @@ uint ClapTrap::getAtkDmg() {
 //  Member functions
 bool ClapTrap::is_dead_() {
     if (this->hit_pts_ == 0) {
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " is K.O."
                     << std::endl;
         return true;
@@ -78,7 +78,7 @@ bool ClapTrap::is_dead_() {
 
 bool ClapTrap::has_energy_() {
     if (this->energy_pts_ == 0) {
-        std::cout   << "(ClavTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has no more energy points."
                     << std::endl;
         return false;
@@ -88,13 +88,13 @@ bool ClapTrap::has_energy_() {
 
 void ClapTrap::attack(const std::string& target) {
     if (this->is_dead_() || !this->has_energy_()) {
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " couldn't attack."
                     << std::endl;
         return ;
     }
     this->energy_pts_--;
-    std::cout   << "(ClapTrap) "
+    std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                 << this->name_ << " has attacked " << target << ", causing " << atk_dmg_ << " damage points!\n"
                 << this->name_ << " has now " << this->energy_pts_ << " energy points."
                 << std::endl;
@@ -102,11 +102,11 @@ void ClapTrap::attack(const std::string& target) {
 
 void ClapTrap::takeDamage(uint amount) {
     if (this->is_dead_()) {
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has already fainted and could not be targeted for damage."
                     << std::endl;
     } else if (this->hit_pts_ <= amount) {
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has lost " << amount << " HP.\n"
                     << this->name_ << " has no more HP left.\n"
                     << this->name_ << " fainted."
@@ -114,7 +114,7 @@ void ClapTrap::takeDamage(uint amount) {
         this->hit_pts_ = 0;
     } else {
         this->hit_pts_ -= amount;
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has lost " << amount << " HP.\n"
                     << this->name_ << " has now " << this->hit_pts_ << " HP left on " << this->MAX_HIT_PTS_
                     << std::endl;
@@ -123,21 +123,21 @@ void ClapTrap::takeDamage(uint amount) {
 
 void ClapTrap::beRepaired(uint amount) {
     if (this->is_dead_() || !this->has_energy_()) {
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " couldn't be repaired."
                     << std::endl;
         return ;
     }
     this->energy_pts_--;
     if (amount + this->hit_pts_ > MAX_HIT_PTS_) {
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has been healed of " << this->MAX_HIT_PTS_ - this->hit_pts_ << " HP.\n"
                     << this->name_ << " has now " << this->MAX_HIT_PTS_ << " HP and " << this->energy_pts_ << " energy points."
                     << std::endl;
         this->hit_pts_ = MAX_HIT_PTS_;
     } else {
         this->hit_pts_ += amount;
-        std::cout   << "(ClapTrap) "
+        std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has been healed of " << amount << " HP.\n"
                     << this->name_ << " has now " << this->hit_pts_ << " HP and " << this->energy_pts_ << " energy points."
                     << std::endl;

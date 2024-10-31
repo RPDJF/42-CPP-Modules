@@ -5,13 +5,18 @@
 # include <iostream>
 # include <string>
 
-class ScavTrap: public ClapTrap {
+class ScavTrap: virtual public ClapTrap {
+    protected:
+        static const uint MAX_HIT_PTS_ = 100;
+        static const uint DF_HIT_PTS_ = MAX_HIT_PTS_;
+        static const uint DF_ENERGY_PTS_ = 50;
+        static const uint DF_ATK_DMG_ = 20;
     public:
         ScavTrap();
-        ScavTrap(std::string name);
-        ScavTrap(ScavTrap& copy);
+        ScavTrap(const std::string& name);
+        ScavTrap(const ScavTrap& copy);
         ~ScavTrap();
-        ScavTrap& operator=(ScavTrap& assign);
+        ScavTrap& operator=(const ScavTrap& assign);
         void attack(const std::string& target);
         void guardGate();
 };
