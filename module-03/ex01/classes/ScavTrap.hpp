@@ -7,8 +7,7 @@
 
 class ScavTrap: virtual public ClapTrap {
     protected:
-        static const uint MAX_HIT_PTS_ = 100;
-        static const uint DF_HIT_PTS_ = MAX_HIT_PTS_;
+        static const uint DF_HIT_PTS_ = 100;
         static const uint DF_ENERGY_PTS_ = 50;
         static const uint DF_ATK_DMG_ = 20;
     public:

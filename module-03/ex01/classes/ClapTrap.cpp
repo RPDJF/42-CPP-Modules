@@ -4,25 +4,28 @@
 ClapTrap::ClapTrap() {
     std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << "ClapTrap default constructor has been called."
                 << std::endl;
-    name_ = "ClapTrap";
-    hit_pts_ = MAX_HIT_PTS_;
-    energy_pts_ = DF_ENERGY_PTS_;
-    atk_dmg_ = DF_ATK_DMG_;
+    this->name_ = "ClapTrap";
+    this->MAX_HIT_PTS_ = DF_HIT_PTS_;
+    this->hit_pts_ = MAX_HIT_PTS_;
+    this->energy_pts_ = DF_ENERGY_PTS_;
+    this->atk_dmg_ = DF_ATK_DMG_;
 }
 
 ClapTrap::ClapTrap(const std::string& name) {
     std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << "ClapTrap name constructor has been called."
                 << std::endl;
-    name_ = name;
-    hit_pts_ = MAX_HIT_PTS_;
-    energy_pts_ = DF_ENERGY_PTS_;
-    atk_dmg_ = DF_ATK_DMG_;
+    this->name_ = name;
+    this->MAX_HIT_PTS_ = DF_HIT_PTS_;
+    this->hit_pts_ = MAX_HIT_PTS_;
+    this->energy_pts_ = DF_ENERGY_PTS_;
+    this->atk_dmg_ = DF_ATK_DMG_;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& copy) {
     std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET << "ClapTrap copy constructor has been called."
                 << std::endl;
     this->name_ = copy.name_;
+    this->MAX_HIT_PTS_ = copy.MAX_HIT_PTS_;
     this->hit_pts_ = copy.hit_pts_;
     this->energy_pts_ = copy.energy_pts_;
     this->atk_dmg_ = copy.atk_dmg_;
@@ -39,13 +42,12 @@ ClapTrap::~ClapTrap() {
 ClapTrap& ClapTrap::operator=(const ClapTrap& assign) {
     if (this == &assign)
         return *this;
-    else {
-        this->name_ = assign.name_;
-        this->hit_pts_ = assign.hit_pts_;
-        this->energy_pts_ = assign.energy_pts_;
-        this->atk_dmg_ = assign.atk_dmg_;
-        return *this;
-    }
+    this->name_ = assign.name_;
+    this->MAX_HIT_PTS_ = assign.MAX_HIT_PTS_;
+    this->hit_pts_ = assign.hit_pts_;
+    this->energy_pts_ = assign.energy_pts_;
+    this->atk_dmg_ = assign.atk_dmg_;
+    return *this;
 }
 
 //  Getters member functions
@@ -116,7 +118,7 @@ void ClapTrap::takeDamage(uint amount) {
         this->hit_pts_ -= amount;
         std::cout   << C_YELLOW << "(ClapTrap) " << C_RESET
                     << this->name_ << " has lost " << amount << " HP.\n"
-                    << this->name_ << " has now " << this->hit_pts_ << " HP left on " << this->MAX_HIT_PTS_
+                    << this->name_ << " has now " << this->hit_pts_ << " HP left on " << this->MAX_HIT_PTS_ << " HP"
                     << std::endl;
     }
 }
