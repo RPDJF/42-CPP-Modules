@@ -3,27 +3,29 @@
 FragTrap::FragTrap(): ClapTrap("FragTrap") {
     std::cout   << C_GREEN << "(FragTrap) " << C_RESET << "FragTrap default constructor has been called."
                 << std::endl;
-    hit_pts_ = MAX_HIT_PTS_;
-    energy_pts_ = DF_ENERGY_PTS_;
-    atk_dmg_ = DF_ATK_DMG_;
-
+    this->MAX_HIT_PTS_ = DF_HIT_PTS_;
+    this->hit_pts_ = MAX_HIT_PTS_;
+    this->energy_pts_ = DF_ENERGY_PTS_;
+    this->atk_dmg_ = DF_ATK_DMG_;
 }
 
 FragTrap::FragTrap(const std::string& name): ClapTrap(name) {
     std::cout   << C_GREEN << "(FragTrap) " << C_RESET << "FragTrap name constructor has been called."
                 << std::endl;
-    hit_pts_ = MAX_HIT_PTS_;
-    energy_pts_ = DF_ENERGY_PTS_;
-    atk_dmg_ = DF_ATK_DMG_;
+    this->MAX_HIT_PTS_ = DF_HIT_PTS_;
+    this->hit_pts_ = MAX_HIT_PTS_;
+    this->energy_pts_ = DF_ENERGY_PTS_;
+    this->atk_dmg_ = DF_ATK_DMG_;
 }
 
-FragTrap::FragTrap(const FragTrap& assign): ClapTrap(assign) {
+FragTrap::FragTrap(const FragTrap& copy): ClapTrap(copy) {
     std::cout   << C_GREEN << "(FragTrap) " << C_RESET << "FragTrap copy constructor has been called."
                 << std::endl;
-    name_ = assign.name_;
-    hit_pts_ = assign.hit_pts_;
-    energy_pts_ = assign.energy_pts_;
-    atk_dmg_ = assign.atk_dmg_;
+    this->name_ = copy.name_;
+    this->MAX_HIT_PTS_ = copy.MAX_HIT_PTS_;
+    this->hit_pts_ = copy.hit_pts_;
+    this->energy_pts_ = copy.energy_pts_;
+    this->atk_dmg_ = copy.atk_dmg_;
 }
 
 FragTrap::~FragTrap() {
@@ -34,10 +36,11 @@ FragTrap::~FragTrap() {
 FragTrap& FragTrap::operator=(const FragTrap &assign) {
     if (this == &assign)
         return *this;
-    name_ = assign.name_;
-    hit_pts_ = assign.hit_pts_;
-    energy_pts_ = assign.energy_pts_;
-    atk_dmg_ = assign.atk_dmg_;
+    this->name_ = assign.name_;
+    this->MAX_HIT_PTS_ = assign.MAX_HIT_PTS_;
+    this->hit_pts_ = assign.hit_pts_;
+    this->energy_pts_ = assign.energy_pts_;
+    this->atk_dmg_ = assign.atk_dmg_;
     return *this;
 }
 

@@ -10,10 +10,10 @@
 
 class ClapTrap {
     protected:
-        static const uint MAX_HIT_PTS_ = 10;
-        static const uint DF_HIT_PTS_ = MAX_HIT_PTS_;
+        static const uint DF_HIT_PTS_ = 10;
         static const uint DF_ENERGY_PTS_ = 10;
         static const uint DF_ATK_DMG_ = 0;
+        uint MAX_HIT_PTS_;
         std::string name_;
         uint hit_pts_;
         uint energy_pts_;

@@ -4,6 +4,7 @@
 ScavTrap::ScavTrap(): ClapTrap("ScavTrap") {
     std::cout   << C_MAGENTA << "(ScavTrap) " << C_RESET << "ScavTrap default constructor has been called."
                 << std::endl;
+    this->MAX_HIT_PTS_ = DF_HIT_PTS_;
     this->hit_pts_ = MAX_HIT_PTS_;
     this->energy_pts_ = DF_ENERGY_PTS_;
     this->atk_dmg_ = DF_ATK_DMG_;
@@ -12,6 +13,7 @@ ScavTrap::ScavTrap(): ClapTrap("ScavTrap") {
 ScavTrap::ScavTrap(const std::string& name): ClapTrap(name) {
     std::cout   << C_MAGENTA << "(ScavTrap) " << C_RESET << "ScavTrap name constructor has been called."
                 << std::endl;
+    this->MAX_HIT_PTS_ = DF_HIT_PTS_;
     this->hit_pts_ = MAX_HIT_PTS_;
     this->energy_pts_ = DF_ENERGY_PTS_;
     this->atk_dmg_ = DF_ATK_DMG_;
@@ -21,6 +23,7 @@ ScavTrap::ScavTrap(const ScavTrap& copy): ClapTrap(copy) {
     std::cout   << C_MAGENTA << "(ScavTrap) " << C_RESET << "ScavTrap copy constructor has been called."
                 << std::endl;
     this->name_ = copy.name_;
+    this->MAX_HIT_PTS_ = copy.MAX_HIT_PTS_;
     this->hit_pts_ = copy.hit_pts_;
     this->energy_pts_ = copy.energy_pts_;
     this->atk_dmg_ = copy.atk_dmg_;
@@ -52,13 +55,12 @@ void ScavTrap::attack(const std::string& target) {
 ScavTrap& ScavTrap::operator=(const ScavTrap& assign) {
     if (this == &assign)
         return *this;
-    else {
-        this->name_ = assign.name_;
-        this->hit_pts_ = assign.hit_pts_;
-        this->energy_pts_ = assign.energy_pts_;
-        this->atk_dmg_ = assign.atk_dmg_;
-        return *this;
-    }
+    this->name_ = assign.name_;
+    this->MAX_HIT_PTS_ = assign.MAX_HIT_PTS_;
+    this->hit_pts_ = assign.hit_pts_;
+    this->energy_pts_ = assign.energy_pts_;
+    this->atk_dmg_ = assign.atk_dmg_;
+    return *this;
 }
 
 //  Member functions
