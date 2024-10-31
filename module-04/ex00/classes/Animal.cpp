@@ -1,22 +1,38 @@
 #include "./Animal.hpp"
 
-Animal::Animal() : type_("") {}
+static void annonce() {
+    std::cout << C_YELLOW << "(Animal) " << C_RESET;
+}
 
-Animal::Animal(const std::string& type) : type_(type) {}
+Animal::Animal() : type_("") {
+    annonce();
+    std::cout << "Default constructor call" << std::endl;
+}
 
-Animal::Animal(const Animal& copy) : type_(copy.type_) {}
+Animal::Animal(const std::string& type) : type_(type) {
+    annonce();
+    std::cout << "Type constructor call " << C_MAGENTA << type << std::endl;
+}
 
-Animal::~Animal() {/* Useful code, don't mind about me */}
+Animal::Animal(const Animal& copy) : type_(copy.type_) {
+    annonce();
+    std::cout << "Copy constructor call" << std::endl;
+}
+
+Animal::~Animal() {
+    annonce();
+    std::cout << "Deconstructor call " << C_MAGENTA << this->type_ << std::endl;
+}
 
 Animal& Animal::operator=(const Animal& assign) {
-	if (this == &assign)
-		return *this;
-	this->type_ = assign.type_;
-	return *this;
+    if (this == &assign)
+        return *this;
+    this->type_ = assign.type_;
+    return *this;
 }
 
 const std::string& Animal::getType() const { return (this->type_); }
 
 void Animal::makeSound() const {
-	std::cout << "Hey. I'm Bob." << std::endl;
+    std::cout << "Hey. I'm Bob." << std::endl;
 }

@@ -1,19 +1,31 @@
 #include "./Dog.hpp"
 
-Dog::Dog(): Animal("Dog") {}
+static void annonce() {
+    std::cout << C_GREEN << "(Dog) " << C_RESET;
+}
 
-Dog::Dog(const Dog& copy): Animal(copy) {}
+Dog::Dog(): Animal("Dog") {
+    annonce();
+    std::cout << "Default constructor call" << std::endl;
+}
 
-Dog::~Dog() {/* very useful code, don't touch it */}
+Dog::Dog(const Dog& copy): Animal(copy) {
+    annonce();
+    std::cout << "Copy constructor call" << std::endl;
+}
 
+Dog::~Dog() {
+    annonce();
+    std::cout << "Deconstructor call" << std::endl;
+}
 
 Dog& Dog::operator=(const Dog& assign) {
-	if (this == &assign)
-		return *this;
-	Animal::operator=(assign);
-	return *this;
+    if (this == &assign)
+        return *this;
+    Animal::operator=(assign);
+    return *this;
 }
 
 void Dog::makeSound() const {
-	std::cout << "waf!" << std::endl;
+    std::cout << "waf!" << std::endl;
 }

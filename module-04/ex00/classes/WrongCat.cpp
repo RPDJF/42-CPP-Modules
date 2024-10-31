@@ -1,10 +1,23 @@
 #include "./WrongCat.hpp"
 
-WrongCat::WrongCat(): Animal("WrongCat") {}
+static void annonce() {
+    std::cout << C_RED << "(WrongCat) " << C_RESET;
+}
 
-WrongCat::WrongCat(const WrongCat& copy): Animal(copy) {}
+WrongCat::WrongCat(): Animal("WrongCat") {
+    annonce();
+    std::cout << "Default constructor call" << std::endl;
+}
 
-WrongCat::~WrongCat() {/* As useful as a real WrongCat */}
+WrongCat::WrongCat(const WrongCat& copy): Animal(copy) {
+    annonce();
+    std::cout << "Copy constructor call" << std::endl;
+}
+
+WrongCat::~WrongCat() {
+    annonce();
+    std::cout << "Deconstructor call" << std::endl;
+}
 
 WrongCat& WrongCat::operator=(const WrongCat& assign) {
 	if (this == &assign)
