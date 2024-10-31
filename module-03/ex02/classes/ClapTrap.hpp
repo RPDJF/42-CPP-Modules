@@ -4,13 +4,17 @@
 # include <iostream>
 # include <string>
 
+# ifndef uint
+#  define uint unsigned int
+# endif
+
 class ClapTrap {
     protected:
         std::string name_;
-        unsigned int hit_pts_;
-        unsigned int MAX_HIT_PTS_;
-        unsigned int energy_pts_;
-        unsigned int atk_dmg_;
+        uint hit_pts_;
+        uint MAX_HIT_PTS_;
+        uint energy_pts_;
+        uint atk_dmg_;
         bool is_dead_();
         bool has_energy_();
     public:
@@ -20,12 +24,12 @@ class ClapTrap {
         ~ClapTrap();
         ClapTrap& operator=(ClapTrap& assign);
         std::string getName();
-        unsigned int getHitPts();
-        unsigned int getEnergyPts();
-        unsigned int getAtkDmg();
+        uint getHitPts();
+        uint getEnergyPts();
+        uint getAtkDmg();
         void attack(const std::string& target);
-        void takeDamage(unsigned int amount);
-        void beRepaired(unsigned int amount);
+        void takeDamage(uint amount);
+        void beRepaired(uint amount);
 };
 
 #endif

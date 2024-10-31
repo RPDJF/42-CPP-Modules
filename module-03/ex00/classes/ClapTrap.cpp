@@ -53,15 +53,15 @@ std::string ClapTrap::getName() {
     return this->name_;
 }
 
-unsigned int ClapTrap::getHitPts() {
+uint ClapTrap::getHitPts() {
     return this->hit_pts_;
 }
 
-unsigned int ClapTrap::getEnergyPts() {
+uint ClapTrap::getEnergyPts() {
     return this->energy_pts_;
 }
 
-unsigned int ClapTrap::getAtkDmg() {
+uint ClapTrap::getAtkDmg() {
     return this->atk_dmg_;
 }
 
@@ -100,7 +100,7 @@ void ClapTrap::attack(const std::string& target) {
                 << std::endl;
 }
 
-void ClapTrap::takeDamage(unsigned int amount) {
+void ClapTrap::takeDamage(uint amount) {
     if (this->is_dead_()) {
         std::cout   << "(ClapTrap) "
                     << this->name_ << " has already fainted and could not be targeted for damage."
@@ -121,7 +121,7 @@ void ClapTrap::takeDamage(unsigned int amount) {
     }
 }
 
-void ClapTrap::beRepaired(unsigned int amount) {
+void ClapTrap::beRepaired(uint amount) {
     if (this->is_dead_() || !this->has_energy_()) {
         std::cout   << "(ClapTrap) "
                     << this->name_ << " couldn't be repaired."
