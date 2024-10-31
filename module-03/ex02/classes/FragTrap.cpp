@@ -45,6 +45,20 @@ FragTrap& FragTrap::operator=(FragTrap &assign) {
     return *this;
 }
 
+void FragTrap::attack(const std::string& target) {
+    if (this->is_dead_() || !this->has_energy_()) {
+        std::cout   << "(FragTrap) "
+                    << this->name_ << " couldn't attack."
+                    << std::endl;
+        return ;
+    }
+    this->energy_pts_--;
+    std::cout   << "(FragTrap) "
+                << this->name_ << " has attacked " << target << ", causing " << atk_dmg_ << " damage points!\n"
+                << this->name_ << " has now " << this->energy_pts_ << " energy points."
+                << std::endl;
+}
+
 void FragTrap::highFivesGuys() {
     if (this->is_dead_() || !this->has_energy_()) {
         std::cout   << "(FragTrap) " << this->name_ << " couldn't ask for an highfive."
