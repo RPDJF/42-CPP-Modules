@@ -14,5 +14,9 @@ int main()
 	j->makeSound();
 	pythondev->makeSound();
 	meta->makeSound();
+	delete meta;
+	delete j;
+	delete i;
+	delete pythondev;
 	return 0;
 }
