@@ -53,6 +53,7 @@ SRC =	main \
 SRC +=	classes/Animal \
 		classes/Dog \
 		classes/Cat \
+		classes/WrongCat \
 
 CPPFILES = $(SRC:%=%.cpp)
 
