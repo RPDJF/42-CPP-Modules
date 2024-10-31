@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include "../utils/colors.h"
 
 class Animal
 {
@@ -12,7 +13,7 @@ class Animal
 		Animal();
 		Animal(const std::string& type);
 		Animal(const Animal& copy);
-		~Animal();
+		virtual ~Animal();
 		Animal& operator=(const Animal& assign);
 		const std::string& getType() const;
 		virtual void makeSound() const;
