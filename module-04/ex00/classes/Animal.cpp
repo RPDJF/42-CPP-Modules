@@ -11,7 +11,7 @@ Animal::Animal() : type_("") {
 
 Animal::Animal(const std::string& type) : type_(type) {
     annonce();
-    std::cout << "Type constructor call " << C_MAGENTA << type << std::endl;
+    std::cout << "Type constructor call " << C_MAGENTA << type <<  C_RESET << std::endl;
 }
 
 Animal::Animal(const Animal& copy) : type_(copy.type_) {
@@ -21,7 +21,7 @@ Animal::Animal(const Animal& copy) : type_(copy.type_) {
 
 Animal::~Animal() {
     annonce();
-    std::cout << "Deconstructor call " << C_MAGENTA << this->type_ << std::endl;
+    std::cout << "Deconstructor call " << C_MAGENTA << this->type_ << C_RESET << std::endl;
 }
 
 Animal& Animal::operator=(const Animal& assign) {
