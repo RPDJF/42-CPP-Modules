@@ -1,4 +1,5 @@
 #include "./Cure.hpp"
+#include "./ICharacter.hpp"
 
 Cure::Cure(): AMateria(C_GREEN + std::string("cure") + C_RESET) {}
 

@@ -2,12 +2,13 @@
 # define AMATERIA_HPP
 
 # include <iostream>
-# include "./ICharacter.hpp"
 # include "../utils/colors.h"
+
+class ICharacter;
 
 class AMateria {
     protected:
-        const std::string& type;
+        const std::string type_;
     public:
         AMateria(const std::string& type);
         AMateria(const AMateria& copy);

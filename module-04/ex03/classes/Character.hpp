@@ -2,12 +2,12 @@
 # define CHARACTER_HPP
 
 # include "./ICharacter.hpp"
-# include <vector>
+# include "./Inventory.hpp"
 
 class Character: public ICharacter {
     private:
         std::string name_;
-        std::vector<AMateria *> inventory_;
+        Inventory inventory_;
         void annonce();
     public:
         Character();

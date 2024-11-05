@@ -51,6 +51,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98 -Wshadow -Wno-shadow
 SRC =	main \
 
 SRC +=	classes/AMateria \
+		classes/Character \
+		classes/Inventory \
 		classes/Cure \
 		classes/Ice \
 
