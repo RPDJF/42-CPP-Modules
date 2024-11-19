@@ -1,9 +1,7 @@
 #include "./Ice.hpp"
 #include "./ICharacter.hpp"
 
-Ice::Ice(): AMateria(C_CYAN + std::string("ice") + C_RESET) {
-    std::cout << "Ice default constructor called.\nType:" << this->getType() << std::endl;
-}
+Ice::Ice(): AMateria(C_CYAN + std::string("ice") + C_RESET) { /* Useful 42 code*/ }
 
 Ice::Ice(const Ice& copy): AMateria(copy) {}
 
