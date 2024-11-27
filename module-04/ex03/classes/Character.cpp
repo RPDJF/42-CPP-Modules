@@ -10,7 +10,7 @@ Character::Character(const std::string& name): name_(name) {}
 
 Character::Character(const Character& copy): name_(copy.name_), inventory_(copy.inventory_) {}
 
-Character::~Character() { /* Very useful code, don't touch it */}
+Character::~Character() { /* Very useful code, don't touch it */ }
 
 Character& Character::operator=(const Character& assign) {
     if (this == &assign)
