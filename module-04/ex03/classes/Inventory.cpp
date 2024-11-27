@@ -20,6 +20,9 @@ Inventory::Inventory(const Inventory& copy) {
 }
 
 Inventory::~Inventory() {
+	for (unsigned int i = 0; i < this->getSize(); i++) {
+		delete this->arr_[i];
+	}
 	if (Inventory::inventoryInstances_)
 		Inventory::inventoryInstances_--;
 	if (!Inventory::inventoryInstances_) {
@@ -55,18 +58,22 @@ void Inventory::addItem(AMateria* materia) {
     if(this->size_ >= INV_SIZE)
         return ;
     this->arr_[this->size_] = materia;
+	t_floor_node *node = Inventory::floor_;
+	t_floor_node *prev = 0;
+	while (node) {
+		if (node->materia == materia) {
+			if (prev)
+				prev->next = node->next;
+			else
+				Inventory::floor_ = node->next;
+			delete node;
+			break;
+		}
+		prev = node;
+		node = node->next;
+	}
     this->size_++;
 	materia->setEquip(true);
-	t_floor_node *dup = Inventory::floor_;
-	while (dup && dup->materia != materia) {
-		dup = dup->next;
-	}
-	if (dup)
-		return ;
-	t_floor_node* node = new t_floor_node;
-	node->materia = materia;
-	node->next = Inventory::floor_;
-	Inventory::floor_ = node;
 }
 
 void Inventory::removeItem(unsigned int idx) {
@@ -77,6 +84,10 @@ void Inventory::removeItem(unsigned int idx) {
 		this->arr_[i] = this->arr_[i + 1];
 	}
 	this->arr_[this->size_ - 1]->setEquip(false);
+	t_floor_node *prev = Inventory::floor_;
+	Inventory::floor_ = new t_floor_node;
+	Inventory::floor_->next = prev;
+	Inventory::floor_->materia = this->arr_[this->size_ - 1];
 	this->arr_[this->size_ - 1] = 0;
 	this->size_--;
 }
