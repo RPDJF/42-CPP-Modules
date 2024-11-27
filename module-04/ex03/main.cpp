@@ -110,5 +110,23 @@ int main(void) {
 	Fclivaz.use(0, Rudejes);
 
 	std::cout << C_BOLD << C_YELLOW << Rudejes.getName() << C_RESET << C_BOLD << " is shocked by the Thunder spell, staggering back from the impact." << std::endl;
+
+	Character Mvillarr("Mvillarr");
+	std::cout << "Suddenly, from nowhere, a new challenger appears: " << C_BOLD << C_YELLOW << Mvillarr.getName() << C_RESET << "." << std::endl;
+	std::cout << "She steps onto the battlefield, her eyes blazing with determination before throwing powerful thunderbolts to everyone." << std::endl;
+	Mvillarr.equip(new Thunder());
+	Mvillarr.use(0, Rudejes);
+	Mvillarr.use(0, Rrouille);
+	Mvillarr.use(0, Ilyanar);
+	Mvillarr.use(0, Fclivaz);
+	Fclivaz.talk("Poutou poutou !");
+	Mvillarr.talk("Poutou !");
+	std::cout << "The battlefield is silent, the dust settling around the fallen warriors." << std::endl;
+	Mvillarr.talk("Venez, on va manger des ramens!");
+	std::cout << "From now on, I'll just test my deep copy and assignment operator." << std::endl;
+	Character Mvillarr2(Mvillarr);
+	Character Mvillarr3("Mvillarr3");
+	Mvillarr3.equip(new Ice());
+	Mvillarr3 = Mvillarr2;
     return (0);
 }
