@@ -23,7 +23,6 @@ Inventory::~Inventory() {
 	if (Inventory::inventoryInstances_)
 		Inventory::inventoryInstances_--;
 	if (!Inventory::inventoryInstances_) {
-		std::cout << "once" << std::endl;
 		t_floor_node *node = Inventory::floor_;
 		t_floor_node *next;
 		while (node) {

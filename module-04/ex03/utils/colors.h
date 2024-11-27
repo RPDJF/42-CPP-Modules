@@ -24,6 +24,7 @@
 # define C_BLACK "\001\033[30m\002"
 # define C_WHITE "\001\033[37m\002"
 # define C_RESET "\001\033[0m\002"
+# define C_GRAY "\001\033[38;5;235m\002"
 
 //	Text effects definition
 # define C_BOLD "\001\033[1m\002"
@@ -33,6 +34,7 @@
 # define C_INVISIBLE "\001\033[8m\002"
 # define C_STRIKETHROUGH "\001\033[9m\002"
 # define C_CLEAR "\001\033[2J\001\033[1;1H"
+# define C_BGRAY "\001\033[48;5;235m\002"
 
 //	Background colors definition
 # define C_BBLACK "\001\033[40m\002"

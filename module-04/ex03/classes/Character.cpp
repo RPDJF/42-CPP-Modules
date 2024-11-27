@@ -1,7 +1,7 @@
 #include "./Character.hpp"
 
-void Character::annonce() {
-    std::cout << C_YELLOW << this->name_ << C_RESET ;
+void Character::annonce() const {
+    std::cout << C_GRAY << "❯ " << C_YELLOW << this->name_ << C_RESET ;
 }
 
 Character::Character(): name_("Bob") {}
@@ -35,7 +35,7 @@ void Character::equip(AMateria* m) {
 	}
 	else {
 		this->inventory_.addItem(m);
-    	std::cout << " equiped " << m->getType() << " materia " << C_YELLOW << "n°" << m << C_RESET << " at position " << this->inventory_.getSize() - 1 << std::endl;
+    	std::cout << " equiped " << m->getType() << " materia " << C_YELLOW << "n°" << m << C_CYAN << " at idx " << this->inventory_.getSize() - 1 << C_RESET << std::endl;
 	}
 }
 
@@ -61,4 +61,9 @@ void Character::use(int idx, ICharacter& target) {
         return ;
     }
     this->inventory_.itemAt(idx)->use(target);
+}
+
+void Character::talk(const std::string& text) const {
+	this->annonce();
+	std::cout << " " << " ❝" << text << "❞ " << C_RESET << std::endl;
 }

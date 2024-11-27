@@ -2,7 +2,9 @@
 #include "./ICharacter.hpp"
 
 #include <cstdio>
-AMateria::AMateria(const std::string& type):type_(type), isEquiped_(false) { /* Useful 42 code*/ }
+AMateria::AMateria(const std::string& type):type_(type), isEquiped_(false) {
+	std::cout << "A new " << this->type_ << " materia appeared on the battlefield ! (" << C_YELLOW << "n°" << this << C_RESET << ")" << std::endl;
+}
 
 AMateria::AMateria(const AMateria& copy):type_(copy.type_), isEquiped_(false) {}
 
