@@ -1,8 +1,5 @@
 #include "classes/Character.hpp"
-#include "classes/Ice.hpp"
-#include "classes/Fire.hpp"
-#include "classes/Thunder.hpp"
-#include "classes/Cure.hpp"
+#include "utils/materias.hpp"
 
 int main(void) {
 	std::cout << C_YELLOW << "Once upon a time, two mighty clans were locked in an eternal struggle." << C_RESET << std::endl;
@@ -76,7 +73,7 @@ int main(void) {
 
 	std::cout << Rudejes.getName() << ", seeing the situation, decides to use something even more dangerous:" << std::endl; 
 	Rudejes.talk("This will poison you, " + Ilyanar.getName() + "! You won't be able to keep up with me!");
-	Rudejes.equip(new Cure());
+	Rudejes.equip(new Poison());
 	Rudejes.use(1, Ilyanar);
 
 	std::cout << C_BOLD << C_YELLOW << Ilyanar.getName() << C_RESET << C_BOLD << " feels the toxic poison coursing through his veins." << std::endl;
