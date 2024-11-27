@@ -29,10 +29,14 @@ void Character::equip(AMateria* m) {
     if (this->inventory_.getSize() >= 4) {
         std::cout << "'s inventory is already " << C_RED << "full of materia" << C_RESET << "\n"
         << C_YELLOW << "Unequip" << C_RESET << "some materia and try again." << std::endl;
-        return;
     }
-    this->inventory_.addItem(m);
-    std::cout << " equiped " << m->getType() << " materia at position " << this->inventory_.getSize() - 1 << std::endl;
+	else if (m->isEquiped()) {
+		std::cout << " tried to equip the " << m->getType() << " materia " << C_YELLOW << "n°" << m << C_RED << " but it isn't available anymore" << C_RESET << std::endl;
+	}
+	else {
+		this->inventory_.addItem(m);
+    	std::cout << " equiped " << m->getType() << " materia " << C_YELLOW << "n°" << m << C_RESET << " at position " << this->inventory_.getSize() - 1 << std::endl;
+	}
 }
 
 void Character::unequip(int idx) {
@@ -40,14 +44,14 @@ void Character::unequip(int idx) {
     std::string matName;
 
     this->annonce();
-    if (this->inventory_.getSize() >= static_cast<unsigned int>(idx)) {
+    if (static_cast<unsigned int>(idx) >= this->inventory_.getSize()) {
         std::cout << C_RED << " you can't unequip an item you don't have !" << C_RESET << std::endl;
         return;
     }
     mat = this->inventory_.itemAt(idx);
     matName = mat->getType();
+	std::cout << " successfully unequiped " << matName << " materia " << C_YELLOW << "n°" << this->inventory_.itemAt(idx) << C_RESET << std::endl;
     this->inventory_.removeItem(idx);
-    std::cout << " successfully unequiped " << matName << " materia." << std::endl;
 }
 
 void Character::use(int idx, ICharacter& target) {

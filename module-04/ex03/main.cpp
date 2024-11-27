@@ -4,15 +4,22 @@
 
 int main(void) {
     Character Franculin("Franculin");
-    Character Carapute("Carapute");
-    AMateria *df_ice;
-    (void)df_ice;
-    (void)Franculin;
-    (void)Carapute;
+	Character Macchiotte("Macchiotte");
+	AMateria *df_ice = new Ice();
+	AMateria *df_cure = new Cure();
 
-    df_ice = new Ice();
+	Macchiotte.equip(df_ice);
     Franculin.equip(df_ice);
-    Franculin.equip(new Cure());
-    Franculin.use(0, Carapute);
+	Macchiotte.unequip(0);
+	Macchiotte.equip(df_ice);
+	Macchiotte.unequip(0);
+    Franculin.equip(df_cure);
+	Franculin.equip(df_ice->clone());
+	Franculin.equip(df_cure);
+	Franculin.unequip(0);
+	Franculin.unequip(0);
+	Franculin.unequip(0);
+	Franculin.unequip(0);
+	Franculin.unequip(0);
     return (0);
 }

@@ -4,14 +4,19 @@
 # include "./AMateria.hpp"
 
 # define INV_SIZE 4
-# ifndef nullptr
-#  define nullptr 0
-# endif
+
+typedef struct s_floor_node t_floor_node;
+typedef struct s_floor_node {
+    AMateria *materia;
+    t_floor_node* next;
+}	t_floor_node;
 
 class Inventory {
     private:
         unsigned int size_;
         AMateria* arr_[INV_SIZE];
+        static t_floor_node* floor_;
+		static unsigned int inventoryInstances_;
     public:
         Inventory();
         Inventory(const Inventory& copy);
