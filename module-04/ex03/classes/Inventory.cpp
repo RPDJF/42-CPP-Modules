@@ -13,7 +13,7 @@ Inventory::Inventory(const Inventory& copy) {
 	Inventory::inventoryInstances_++;
     this->size_ = copy.size_;
     for (unsigned int i = 0; i < INV_SIZE; i++)
-        if (copy.arr_[i] != 0)
+        if (copy.arr_[i])
             this->arr_[i] = copy.arr_[i]->clone();
         else
             this->arr_[i] = 0;
@@ -42,6 +42,7 @@ const Inventory& Inventory::operator=(const Inventory& assign) {
     if (this == &assign)
         return *this;
     for (unsigned int i = 0; i < this->size_; i++) {
+		delete arr_[i];
         arr_[i] = 0;
     }
     this->size_ = assign.size_;
