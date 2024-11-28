@@ -15,4 +15,6 @@ class Zombie {
 		void	annonce();
 };
 
+Zombie*	zombieHorde(int N, std::string name);
+
 #endif
