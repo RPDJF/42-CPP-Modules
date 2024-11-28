@@ -58,6 +58,7 @@ SRC +=	classes/AMateria \
 		classes/Fire \
 		classes/Thunder \
 		classes/Poison \
+		classes/MateriaSource \
 
 CPPFILES = $(SRC:%=%.cpp)
 
