@@ -1,5 +1,4 @@
-#include "newZombie.hpp"
-#include "randomChump.hpp"
+#include "classes/Zombie.hpp"
 
 int	main() {
 	Zombie	*zombie;
