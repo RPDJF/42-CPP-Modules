@@ -26,7 +26,10 @@ const std::string& Character::getName() const {
 
 void Character::equip(AMateria* m) {
     this->annonce();
-    if (this->inventory_.getSize() >= 4) {
+	if (!m) {
+		std::cout << " tried to equip.. nothing?" << std::endl;
+	}
+    else if (this->inventory_.getSize() >= 4) {
         std::cout << "'s inventory is already " << C_RED << "full of materia" << C_RESET << "\n"
         << C_YELLOW << "Unequip" << C_RESET << "some materia and try again." << std::endl;
     }

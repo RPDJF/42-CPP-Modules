@@ -12,7 +12,11 @@ MateriaSource::MateriaSource(const MateriaSource& copy): size_(copy.size_) {
 	}
 }
 
-MateriaSource::~MateriaSource() { /* Useful 42 code*/ }
+MateriaSource::~MateriaSource() {
+	for (unsigned char i = 0; i < this->size_; i++) {
+		delete this->arr_[i];
+	}
+}
 
 const MateriaSource& MateriaSource::operator=(const MateriaSource& assign) {
 	if (this == &assign)
@@ -27,7 +31,7 @@ const MateriaSource& MateriaSource::operator=(const MateriaSource& assign) {
 
 void MateriaSource::learnMateria(AMateria* m) {
 	if (this->size_ < SRC_SIZE) {
-		this->arr_[this->size_++] = m->clone();
+		this->arr_[this->size_++] = m;
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "./Ice.hpp"
 #include "./ICharacter.hpp"
 
-Ice::Ice(): AMateria(C_CYAN + std::string("ice") + C_RESET) { /* Useful 42 code*/ }
+Ice::Ice(): AMateria("ice") { /* Useful 42 code*/ }
 
 Ice::Ice(const Ice& copy): AMateria(copy) {}
 

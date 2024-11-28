@@ -1,7 +1,7 @@
 #include "./Cure.hpp"
 #include "./ICharacter.hpp"
 
-Cure::Cure(): AMateria(C_GREEN + std::string("cure") + C_RESET) {}
+Cure::Cure(): AMateria("cure") {}
 
 Cure::Cure(const Cure& copy): AMateria(copy) {}
 

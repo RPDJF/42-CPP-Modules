@@ -128,5 +128,16 @@ int main(void) {
 	Character Mvillarr3("Mvillarr3");
 	Mvillarr3.equip(new Ice());
 	Mvillarr3 = Mvillarr2;
+
+	IMateriaSource* source = new MateriaSource();
+	source->learnMateria(new Cure());
+	source->learnMateria(new Poison());
+	ICharacter* Smuravye = new Character("Smuravye");
+	Smuravye->equip(source->createMateria("cure"));
+	Smuravye->equip(source->createMateria("poison"));
+	Smuravye->use(1, *Smuravye);
+	Smuravye->use(0, *Smuravye);
+	delete source;
+	delete Smuravye;
     return (0);
 }

@@ -1,7 +1,7 @@
 #include "./Fire.hpp"
 #include "./ICharacter.hpp"
 
-Fire::Fire(): AMateria(C_RED + std::string("fire") + C_RESET) { /* Useful 42 code*/ }
+Fire::Fire(): AMateria("fire") { /* Useful 42 code*/ }
 
 Fire::Fire(const Fire& copy): AMateria(copy) {}
 

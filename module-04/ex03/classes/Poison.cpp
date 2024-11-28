@@ -1,7 +1,7 @@
 #include "./Poison.hpp"
 #include "./ICharacter.hpp"
 
-Poison::Poison(): AMateria(C_MAGENTA + std::string("poison") + C_RESET) { /* Useful 42 code*/ }
+Poison::Poison(): AMateria("poison") { /* Useful 42 code*/ }
 
 Poison::Poison(const Poison& copy): AMateria(copy) {}
 

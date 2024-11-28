@@ -1,7 +1,7 @@
 #include "./Thunder.hpp"
 #include "./ICharacter.hpp"
 
-Thunder::Thunder(): AMateria(C_YELLOW + std::string("thunder") + C_RESET) { /* Useful 42 code*/ }
+Thunder::Thunder(): AMateria("thunder") { /* Useful 42 code*/ }
 
 Thunder::Thunder(const Thunder& copy): AMateria(copy) {}
 
