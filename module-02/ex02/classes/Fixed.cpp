@@ -129,7 +129,7 @@ float Fixed::toFloat() const {
 	return static_cast<float>(this->raw_bits_) / static_cast<float>((1 << this->fractionnal_bits_));
 }
 
-Fixed& min(Fixed &assign1, Fixed &assign2) {
+Fixed& Fixed::min(Fixed &assign1, Fixed &assign2) {
 	if (assign1 <= assign2)
 		return assign1;
 	return assign2;
