@@ -9,7 +9,7 @@
 # endif
 
 class ClapTrap {
-    protected:
+    private:
         static const uint DF_HIT_PTS_ = 10;
         static const uint DF_ENERGY_PTS_ = 10;
         static const uint DF_ATK_DMG_ = 0;
