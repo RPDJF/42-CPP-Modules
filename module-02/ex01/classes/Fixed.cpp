@@ -15,9 +15,10 @@ Fixed::Fixed(int value) {
 	this->raw_bits_ = value << this->fractionnal_bits_;
 }
 
+/** Used to force roundf instead of std::round bc of linux +98 */
 Fixed::Fixed(float value) {
 	std::cout << "Float constructor called" << std::endl;
-	this->raw_bits_ = std::roundf(value * (1 << this->fractionnal_bits_));
+	this->raw_bits_ = roundf(value * (1 << this->fractionnal_bits_));
 }
 
 Fixed::~Fixed() {
