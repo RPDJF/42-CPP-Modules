@@ -4,13 +4,12 @@ static void annonce() {
     std::cout << C_GREEN << "(Dog) " << C_RESET;
 }
 
-Dog::Dog(): Animal("Dog") {
+Dog::Dog(): Animal("Dog"), brain_(new Brain()) {
     annonce();
     std::cout << "Default constructor call" << std::endl;
-    this->brain_ = new Brain();
 }
 
-Dog::Dog(const Dog& copy): Animal(copy) {
+Dog::Dog(const Dog& copy): Animal(copy), brain_(new Brain(*copy.brain_)) {
     annonce();
     std::cout << "Copy constructor call" << std::endl;
 }
@@ -22,12 +21,21 @@ Dog::~Dog() {
 }
 
 Dog& Dog::operator=(const Dog& assign) {
-    if (this == &assign)
+	annonce();
+	std::cout << "operator= called" << std::endl;
+    if (this == &assign) {
         return *this;
+	}
     Animal::operator=(assign);
+	delete this->brain_;
+	this->brain_ = new Brain(*assign.brain_);
     return *this;
 }
 
 void Dog::makeSound() const {
-    std::cout << "waf!" << std::endl;
+    std::cout << "Waf!" << std::endl;
+}
+
+Brain *Dog::getBrain() const {
+	return this->brain_;
 }

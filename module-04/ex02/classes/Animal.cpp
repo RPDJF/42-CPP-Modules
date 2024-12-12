@@ -32,3 +32,7 @@ Animal& Animal::operator=(const Animal& assign) {
 }
 
 const std::string& Animal::getType() const { return (this->type_); }
+
+void Animal::makeSound() const {
+    std::cout << "Hey. I'm Bob." << std::endl;
+}
