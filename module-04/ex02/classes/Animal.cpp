@@ -25,6 +25,8 @@ Animal::~Animal() {
 }
 
 Animal& Animal::operator=(const Animal& assign) {
+	annonce();
+	std::cout << "operator= called" << std::endl;
     if (this == &assign)
         return *this;
     this->type_ = assign.type_;
