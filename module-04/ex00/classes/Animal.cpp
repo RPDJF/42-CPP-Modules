@@ -4,7 +4,7 @@ static void annonce() {
     std::cout << C_YELLOW << "(Animal) " << C_RESET;
 }
 
-Animal::Animal() : type_("") {
+Animal::Animal() : type_("elle boit du sprite") {
     annonce();
     std::cout << "Default constructor call" << std::endl;
 }
@@ -25,6 +25,8 @@ Animal::~Animal() {
 }
 
 Animal& Animal::operator=(const Animal& assign) {
+	annonce();
+	std::cout << "operator= called" << std::endl;
     if (this == &assign)
         return *this;
     this->type_ = assign.type_;

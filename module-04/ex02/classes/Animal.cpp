@@ -4,7 +4,7 @@ static void annonce() {
     std::cout << C_YELLOW << "(Animal) " << C_RESET;
 }
 
-Animal::Animal() : type_("") {
+Animal::Animal() : type_("elle boit du sprite") {
     annonce();
     std::cout << "Default constructor call" << std::endl;
 }
