@@ -2,7 +2,6 @@
 # define BRAIN_HPP
 
 # include <iostream>
-# include <vector>
 # include "../utils/colors.h"
 
 # define NB_IDEAS 100
