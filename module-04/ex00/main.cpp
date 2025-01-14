@@ -7,7 +7,7 @@ int main()
 	const Animal* meta = new Animal();
 	const Animal* dog = new Dog();
 	const Animal* cat = new Cat();
-	const Animal* pythondev = new WrongCat();
+	const WrongAnimal* pythondev = new WrongCat();
 	std::cout << "type: " << meta->getType() << " " << std::endl;
 	std::cout << "type: " << cat->getType() << " " << std::endl;
 	std::cout << "type: " << dog->getType() << " " << std::endl;
@@ -20,5 +20,10 @@ int main()
 	delete dog;
 	delete cat;
 	delete pythondev;
+	// testing copy
+	Animal c1("wolf");
+	Animal c2;
+	c2 = c1;
+	Animal c3(c1);
 	return 0;
 }

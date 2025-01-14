@@ -20,6 +20,8 @@ Cat::~Cat() {
 }
 
 Cat& Cat::operator=(const Cat& assign) {
+	annonce();
+	std::cout << "Operator = call" << std::endl;
     if (this == &assign)
         return *this;
     Animal::operator=(assign);
@@ -27,5 +29,6 @@ Cat& Cat::operator=(const Cat& assign) {
 }
 
 void Cat::makeSound() const {
+	annonce();
     std::cout << "Meow!" << std::endl;
 }

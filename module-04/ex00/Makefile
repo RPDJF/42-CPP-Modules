@@ -54,6 +54,7 @@ SRC +=	classes/Animal \
 		classes/Dog \
 		classes/Cat \
 		classes/WrongCat \
+		classes/WrongAnimal \
 
 CPPFILES = $(SRC:%=%.cpp)
 

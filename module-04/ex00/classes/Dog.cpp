@@ -20,6 +20,8 @@ Dog::~Dog() {
 }
 
 Dog& Dog::operator=(const Dog& assign) {
+	annonce();
+	std::cout << "Operator = call" << std::endl;
     if (this == &assign)
         return *this;
     Animal::operator=(assign);
@@ -27,5 +29,6 @@ Dog& Dog::operator=(const Dog& assign) {
 }
 
 void Dog::makeSound() const {
+	annonce();
     std::cout << "waf!" << std::endl;
 }

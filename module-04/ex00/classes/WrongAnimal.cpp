@@ -1,30 +1,30 @@
-#include "./Animal.hpp"
+#include "./WrongAnimal.hpp"
 
 static void annonce() {
-    std::cout << C_YELLOW << "(Animal) " << C_RESET;
+    std::cout << C_YELLOW << "(WrongAnimal) " << C_RESET;
 }
 
-Animal::Animal() : type_("elle boit du sprite") {
+WrongAnimal::WrongAnimal() : type_("elle boit du sprite") {
     annonce();
     std::cout << "Default constructor call" << std::endl;
 }
 
-Animal::Animal(const std::string& type) : type_(type) {
+WrongAnimal::WrongAnimal(const std::string& type) : type_(type) {
     annonce();
     std::cout << "Type constructor call " << C_MAGENTA << type <<  C_RESET << std::endl;
 }
 
-Animal::Animal(const Animal& copy) : type_(copy.type_) {
+WrongAnimal::WrongAnimal(const WrongAnimal& copy) : type_(copy.type_) {
     annonce();
     std::cout << "Copy constructor call" << std::endl;
 }
 
-Animal::~Animal() {
+WrongAnimal::~WrongAnimal() {
     annonce();
     std::cout << "Deconstructor call " << C_MAGENTA << this->type_ << C_RESET << std::endl;
 }
 
-Animal& Animal::operator=(const Animal& assign) {
+WrongAnimal& WrongAnimal::operator=(const WrongAnimal& assign) {
 	annonce();
 	std::cout << "operator= called" << std::endl;
     if (this == &assign)
@@ -33,9 +33,9 @@ Animal& Animal::operator=(const Animal& assign) {
     return *this;
 }
 
-const std::string& Animal::getType() const { return (this->type_); }
+const std::string& WrongAnimal::getType() const { return (this->type_); }
 
-void Animal::makeSound() const {
+void WrongAnimal::makeSound() const {
 	annonce();
-    std::cout << "Hey. I'm Bob." << std::endl;
+    std::cout << ".boB m'I .yeH" << std::endl;
 }
