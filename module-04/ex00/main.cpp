@@ -8,10 +8,6 @@ int main()
 	const Animal* dog = new Dog();
 	const Animal* cat = new Cat();
 	const WrongAnimal* pythondev = new WrongCat();
-	std::cout << "type: " << meta->getType() << " " << std::endl;
-	std::cout << "type: " << cat->getType() << " " << std::endl;
-	std::cout << "type: " << dog->getType() << " " << std::endl;
-	std::cout << "type: " << pythondev->getType() << " " << std::endl;
 	meta->makeSound();
 	cat->makeSound(); //will output the cat sound!
 	dog->makeSound();
