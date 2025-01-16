@@ -9,6 +9,9 @@ class Bureaucrat {
 		std::ostream& annonce() const;
 		const std::string name_;
 		int grade_;
+		// exceptions
+		class GradeTooLowException: public std::exception { virtual const char *what() const throw(); };
+		class GradeTooHighException: public std::exception { virtual const char *what() const throw(); };
 	public:
 		static const int MIN_GRADE;
 		static const int MAX_GRADE;
@@ -20,10 +23,6 @@ class Bureaucrat {
 		~Bureaucrat();
 		const std::string& getName() const;
 		int getGrade() const;
-
-		// exceptions
-		class GradeTooLowException: public std::exception { virtual const char *what() const throw(); };
-		class GradeTooHighException: public std::exception { virtual const char *what() const throw(); };
 };
 
 std::ostream& operator<<(std::ostream& stream, const Bureaucrat& bureaucrat);
