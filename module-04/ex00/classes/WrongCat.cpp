@@ -30,5 +30,5 @@ WrongCat& WrongCat::operator=(const WrongCat& assign) {
 
 void WrongCat::makeSound() const {
 	annonce();
-    WrongAnimal::makeSound();
+    std::cout << "!woeM" << std::endl;
 }

@@ -2,8 +2,8 @@
 #include "classes/Dog.hpp"
 #include "classes/WrongCat.hpp"
 
-int main()
-{
+void basicTests() {
+	std::cout << C_CYAN << "Running basic tests" << C_RESET << std::endl;
 	const Animal* meta = new Animal();
 	const Animal* dog = new Dog();
 	const Animal* cat = new Cat();
@@ -17,9 +17,42 @@ int main()
 	delete cat;
 	delete pythondev;
 	// testing copy
-	Animal c1("wolf");
-	Animal c2;
-	c2 = c1;
-	Animal c3(c1);
+	std::cout << "Testing copies" << std::endl;
+	{
+		Animal c1("wolf");
+		Animal c2;
+		c2 = c1;
+		Animal c3(c1);
+	}
+	std::cout << std::endl;
+}
+
+void virtualTests() {
+	std::cout << C_CYAN << "Running virtual tests" << C_RESET << std::endl;
+	const Animal *animal = new Animal();
+	const WrongAnimal *wrongAnimal = new WrongAnimal();
+	const Animal *cat = new Cat();
+	const WrongAnimal *wrongCat = new WrongCat();
+	std::cout << std::endl << "Df animals sounds" << std::endl;
+	animal->makeSound();
+	wrongAnimal->makeSound();
+	std::cout << std::endl << "animals sounds" << std::endl;
+	cat->makeSound();
+	wrongCat->makeSound();
+	std::cout << std::endl << "casted animals sounds" << std::endl;
+	(static_cast<const Cat *>(cat))->makeSound();
+	(static_cast<const WrongCat *>(wrongCat))->makeSound();
+	std::cout << std::endl;
+	delete animal;
+	delete wrongAnimal;
+	delete cat;
+	delete wrongCat;
+	std::cout << std::endl;
+}
+
+int main()
+{
+	basicTests();
+	virtualTests();
 	return 0;
 }
