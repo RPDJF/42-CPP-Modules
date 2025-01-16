@@ -28,6 +28,7 @@ void signTests() {
 		std::cout << "is " << C_YELLOW << marriage.getName() << C_RESET << " signed: " << (marriage.isSigned()? (std::string(C_GREEN) + "true") : (std::string(C_RED) + "false")) << std::endl;
 		david.signForm(marriage);
 		std::cout << "is " << C_YELLOW << marriage.getName() << C_RESET << " signed: " << (marriage.isSigned()? (std::string(C_GREEN) + "true") : (std::string(C_RED) + "false")) << std::endl;
+		david.signForm(marriage);
 	}
 	std::cout << C_YELLOW << "ENDING SIGNTESTS()" << C_RESET << std::endl << std::endl;
 }

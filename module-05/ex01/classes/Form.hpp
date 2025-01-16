@@ -16,6 +16,7 @@ class Form {
 		// exceptions
 		class GradeTooLowException: public std::exception { virtual const char *what() const throw(); };
 		class GradeTooHighException: public std::exception { virtual const char *what() const throw(); };
+		class FormAlreadySignedException: public std::exception { virtual const char *what() const throw(); };
 	public:
 		Form();
 		Form(const std::string& name, int reqSignGrade, int reqExecGrade);
