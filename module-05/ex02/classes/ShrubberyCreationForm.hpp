@@ -11,6 +11,8 @@ class ShrubberyCreationForm: public AForm {
 		static const int REQ_EXEC_GRADE_ = 137;
 		const std::string target_;
 		void createShrubberyFile() const;
+		// exceptions
+		class ShrubberyFileNotCreated: public std::exception { virtual const char *what() const throw(); };
 	public:
 		ShrubberyCreationForm();
 		ShrubberyCreationForm(const std::string& name);

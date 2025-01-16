@@ -12,7 +12,7 @@ void ShrubberyCreationForm::createShrubberyFile() const {
     
     std::ofstream file(fileName.c_str());
     if(!file) {
-        std::cerr << "Unable to create file " << C_CYAN << fileName << C_RESET << std::endl;
+        throw ShrubberyCreationForm::ShrubberyFileNotCreated();
         return;
     }
     repeatFileAppend(file, "       _-_         ", 4);
@@ -60,3 +60,5 @@ void ShrubberyCreationForm::execute(const Bureaucrat& executor) {
     AForm::execute(executor);
     createShrubberyFile();
 }
+
+const char * ShrubberyCreationForm::ShrubberyFileNotCreated::what() const throw() { return "shrubbery file not created!"; }
