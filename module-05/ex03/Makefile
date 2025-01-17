@@ -55,6 +55,7 @@ SRC +=	classes/Bureaucrat \
 		classes/ShrubberyCreationForm \
 		classes/RobotomyRequestForm \
 		classes/PresidentialPardonForm \
+		classes/Intern \
 
 
 CPPFILES = $(SRC:%=%.cpp)

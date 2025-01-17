@@ -1,7 +1,5 @@
 #include "classes/Bureaucrat.hpp"
-#include "classes/ShrubberyCreationForm.hpp"
-#include "classes/RobotomyRequestForm.hpp"
-#include "classes/PresidentialPardonForm.hpp"
+#include "classes/Intern.hpp"
 #include "utils/colors.h"
 
 void basicTests() {
@@ -57,6 +55,38 @@ void executeTests() {
 	std::cout << C_YELLOW << "ENDING EXECUTETESTS()" << C_RESET << std::endl << std::endl;
 }
 
+void internTests() {
+	std::cout << C_YELLOW << "RUNNING INTERNTESTS()" << C_RESET << std::endl;
+	{
+		const Bureaucrat bureaucrat("bureaucrat", Bureaucrat::MAX_GRADE);
+		Intern intern;
+		AForm *robotomy;
+		AForm *presidential;
+		AForm *shrubbery;
+		AForm *nothing;
+
+		robotomy = intern.makeForm("robotomy request", "robotomy");
+		presidential = intern.makeForm("presidential pardon", "presidential");
+		shrubbery = intern.makeForm("shrubbery creation", "shrubbery");
+		nothing = intern.makeForm("marriage", "nothing");
+
+		bureaucrat.signForm(*robotomy);
+		bureaucrat.signForm(*presidential);
+		bureaucrat.signForm(*shrubbery);
+		//bureaucrat.signForm(*nothing);
+		bureaucrat.executeForm(*robotomy);
+		bureaucrat.executeForm(*presidential);
+		bureaucrat.executeForm(*shrubbery);
+		//bureaucrat.executeForm(*nothing);
+		
+		delete robotomy;
+		delete presidential;
+		delete shrubbery;
+		delete nothing;
+	}
+	std::cout << C_YELLOW << "ENDING INTERNTESTS()" << C_RESET << std::endl << std::endl;
+}
+
 void throwTests() {
 	std::cout << C_YELLOW << "RUNNING THROWTESTS()" << C_RESET << std::endl;
 	try {
@@ -73,4 +103,5 @@ int main() {
 	throwTests();
 	signTests();
 	executeTests();
+	internTests();
 }
