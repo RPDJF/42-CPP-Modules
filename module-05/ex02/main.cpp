@@ -1,5 +1,6 @@
 #include "classes/Bureaucrat.hpp"
 #include "classes/ShrubberyCreationForm.hpp"
+#include "classes/RobotomyRequestForm.hpp"
 #include "utils/colors.h"
 
 void basicTests() {
@@ -39,12 +40,15 @@ void executeTests() {
 	{
 		ShrubberyCreationForm michelsh("michelsh");
 		ShrubberyCreationForm davidsh("davidsh");
+		RobotomyRequestForm michelrb("michelrb");
 		Bureaucrat michel("Michel", Bureaucrat::MAX_GRADE);
 		Bureaucrat david("David", Bureaucrat::MIN_GRADE);
 		michel.signForm(michelsh);
 		michel.signForm(davidsh);
 		michel.executeForm(michelsh);
 		david.executeForm(davidsh);
+		michel.signForm(michelrb);
+		michel.executeForm(michelrb);
 	}
 	std::cout << C_YELLOW << "ENDING EXECUTETESTS()" << C_RESET << std::endl << std::endl;
 }
