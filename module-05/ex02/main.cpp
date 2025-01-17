@@ -1,6 +1,7 @@
 #include "classes/Bureaucrat.hpp"
 #include "classes/ShrubberyCreationForm.hpp"
 #include "classes/RobotomyRequestForm.hpp"
+#include "classes/PresidentialPardonForm.hpp"
 #include "utils/colors.h"
 
 void basicTests() {
@@ -41,6 +42,7 @@ void executeTests() {
 		ShrubberyCreationForm michelsh("michelsh");
 		ShrubberyCreationForm davidsh("davidsh");
 		RobotomyRequestForm michelrb("michelrb");
+		PresidentialPardonForm michelpp("michelpp");
 		Bureaucrat michel("Michel", Bureaucrat::MAX_GRADE);
 		Bureaucrat david("David", Bureaucrat::MIN_GRADE);
 		michel.signForm(michelsh);
@@ -49,6 +51,8 @@ void executeTests() {
 		david.executeForm(davidsh);
 		michel.signForm(michelrb);
 		michel.executeForm(michelrb);
+		michel.signForm(michelpp);
+		michel.executeForm(michelpp);
 	}
 	std::cout << C_YELLOW << "ENDING EXECUTETESTS()" << C_RESET << std::endl << std::endl;
 }
