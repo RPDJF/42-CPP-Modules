@@ -139,34 +139,40 @@ static void convertDefault() {
 
 void ScalarConverter::convert(const std::string& param) {
 	int type = typeDetector(param);
-	std::cout << C_YELLOW << type << C_RESET << std::endl;
+	std::cout << C_YELLOW << "type: " << type << " (";
 	std::stringstream ss(param);
 
 	switch (type) {
 		case 0:
+			std::cout << "char)" << C_RESET << std::endl;
 			char c;
 			ss >> c;
 			convertChar(c);
 			break;
 		case 1:
+			std::cout << "int)" << C_RESET << std::endl;
 			int i;
 			ss >> i;
 			convertInt(i);
 			break;
 		case 2:
+			std::cout << "float)" << C_RESET << std::endl;
 			float f;
 			ss >> f;
 			convertFloat(f);
 			break;
 		case 3:
+			std::cout << "double)" << C_RESET << std::endl;
 			double d;
 			ss >> d;
 			convertDouble(d);
 			break;
 		case 4:
+			std::cout << "nan)" << C_RESET << std::endl;
 			convertNan();
 			break;
 		default:
+			std::cout << "impossible)" << C_RESET << std::endl;
 			convertDefault();
 			break;
 

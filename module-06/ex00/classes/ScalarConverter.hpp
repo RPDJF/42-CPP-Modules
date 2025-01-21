@@ -10,6 +10,8 @@
 #include "../utils/colors.h"
 
 class ScalarConverter {
+	private:
+		ScalarConverter();
 	public:
 		static void convert(const std::string&);
 };
