@@ -2,6 +2,7 @@
 #include "classes/Dog.hpp"
 
 int main(void) {
+	// Animal alpha;
 	Animal *animals[20];
 
     for (size_t i = 0; i < 20; i++) {

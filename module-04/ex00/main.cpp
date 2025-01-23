@@ -4,9 +4,14 @@
 
 void basicTests() {
 	std::cout << C_CYAN << "Running basic tests" << C_RESET << std::endl;
-	const Animal* meta = new Animal();
+	Animal alpha("wololo");
+	alpha.makeSound();
+ 	const Animal* meta = new Animal();
+	std::cout << "Type " << meta->getType() << std::endl;
 	const Animal* dog = new Dog();
+	std::cout << "Type " << dog->getType() << std::endl;
 	const Animal* cat = new Cat();
+	std::cout << "Type " << cat->getType() << std::endl;
 	const WrongAnimal* pythondev = new WrongCat();
 	meta->makeSound();
 	cat->makeSound(); //will output the cat sound!
