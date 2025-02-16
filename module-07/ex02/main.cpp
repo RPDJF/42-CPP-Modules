@@ -2,11 +2,6 @@
 #include "classes/Array.hpp"
 #include <iostream>
 
-template<typename T>
-static void print(T var) {
-	std::cout << var << " ";
-}
-
 static void basicTests() {
 	std::cout << C_YELLOW << "RUNNING BASICTESTS() FOR STRINGS" << C_RESET << std::endl;
 	{
