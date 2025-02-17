@@ -61,9 +61,7 @@ unsigned int Span::longestSpan() const {
 
 void Span::fill(std::vector<int>::iterator first, std::vector<int>::iterator last) {
 	for(std::vector<int>::iterator it = first; it != last; it++) {
-		int tmp = std::rand();
-		std::cout << "adding " << tmp << std::endl;
-		this->addNumber(tmp);
+		this->addNumber(std::rand());
 	}
 }
 
