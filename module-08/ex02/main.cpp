@@ -19,7 +19,7 @@ static void basicTests() {
 		std::cout << std::endl << C_MAGENTA << "testing MutantStack" << C_RESET << std::endl;
 		std::cout << "mutant at top: " << mutant.top() << std::endl;
 		std::cout << "mutant at begin: " << *mutant.begin() << std::endl;
-		std::cout << "mutant at begin: " << *(mutant.end() - 1) << std::endl;
+		std::cout << "mutant at end: " << *(mutant.end() - 1) << std::endl;
 		for(MutantStack<int>::iterator it = mutant.begin(); it != mutant.end(); it++) {
 			std::cout << "mutant at iterator " << it - mutant.begin() << ": " << *it << std::endl;
 		}
@@ -37,7 +37,7 @@ static void basicTests() {
 		MutantStack<int> mutantAssign = mutant;
 		std::cout << "mutantAssign at top: " << mutantAssign.top() << std::endl;
 		std::cout << "mutantAssign at begin: " << *mutantAssign.begin() << std::endl;
-		std::cout << "mutantAssign at dend: " << *(mutantAssign.end() - 1) << std::endl;
+		std::cout << "mutantAssign at end: " << *(mutantAssign.end() - 1) << std::endl;
 		for(MutantStack<int>::iterator it = mutantAssign.begin(); it != mutantAssign.end(); it++) {
 			std::cout << "mutantAssign at iterator " << it - mutantAssign.begin() << ": " << *it << std::endl;
 		}
