@@ -37,10 +37,14 @@ BitcoinExchange::BitcoinExchange(const std::string& data) {
 	fillDb(this->db_, data);
 	if(this->db_.empty()) {
 		this->smallest_year_ = -1;
+		this->biggest_year_ = -1;
 		return;
 	}
 	std::stringstream ss(this->db_.begin()->first);
 	ss >> this->smallest_year_;
+	ss.clear();
+	ss.str((this->db_.end().operator--())->first);
+	ss >> this->biggest_year_;
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy):
@@ -61,7 +65,7 @@ BitcoinExchange::~BitcoinExchange() {
 
 // i think it may be the worst function i ever wrote on my whole life
 // but hey, it works
-static std::string getPreviousDate(const std::string& refDate, int smallestYear) {
+static std::string getPreviousDate(const std::string& refDate, int smallestYear, int biggestYear) {
 	t_date date;
 	std::string year;
 	std::string month;
@@ -104,6 +108,12 @@ static std::string getPreviousDate(const std::string& refDate, int smallestYear)
 		date.day--;
 	}
 
+	if (date.year > biggestYear) {
+		date.year = biggestYear;
+		date.month = 12;
+		date.day = 31;
+	}
+
 	// building new date string
 	ss.str("");
 	ss.clear();
@@ -132,7 +142,7 @@ const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveDat
 				return date;
 			}
 		}
-		q = getPreviousDate(q, this->smallest_year_);
+		q = getPreviousDate(q, this->smallest_year_, this->biggest_year_);
 	}
 	return this->db_.end();
 }
