@@ -8,15 +8,27 @@ static void fillDb(std::map<std::string, double>& db, const std::string& data) {
 	std::string key;
 	std::string strvalue;
 	double value;
+	size_t sep;
 	std::getline(db_file, line); // ignore firstline
 
 	while (std::getline(db_file, line)) {
-		key = line.substr(0, line.find(','));
+		sep = line.find(',');
+		if (sep == std::string::npos) {
+			std::cerr << C_RED << "Error (data input): " << "not a valid line => " << line << C_RESET << std::endl;
+			continue;
+		}
+		key = line.substr(0, sep);
+		if (!BitcoinExchange::dateChecker(key)) {
+			std::cerr << C_RED << "Error (data input): " << "not a valid date => " << key << C_RESET << std::endl;
+			continue;
+		}
 		strvalue = line.substr(key.size() + 1, line.size() - key.size() - 1);
 		std::stringstream ss(strvalue);
 		ss >> value;
-		if (ss.fail())
-			throw std::runtime_error("failed parsing value: " + strvalue);
+		if (ss.fail()) {
+			std::cerr << C_RED << "Error (data input): " << "failed parsing value in => " << line << C_RESET << std::endl;
+			continue;
+		}
 		db[key] = value;
 	}
 }
@@ -105,31 +117,35 @@ bool BitcoinExchange::dateChecker(const std::string& key) {
 	std::string year;
 	std::string month;
 	std::string day;
+	std::stringstream ss;
 
 	size_t pos;
 
 	pos = key.find('-');
 	if (pos == std::string::npos) return false;
 	year = key.substr(0, pos);
-	{
-		std::stringstream ss(key.substr(0, pos));
-		ss >> date.year;
-	}
+	ss.clear();
+	ss.str(year);
+	ss >> date.year;
+	if (ss.fail()) return false;
+	if (date.year < 1900) return false;
 
 	pos = key.find('-', pos + 1);
 	if (pos == std::string::npos) return false;
 	month = key.substr(year.size() + 1, pos - (year.size() + 1));
-	{
-		std::stringstream ss(month);
-		ss >> date.month;
-	}
+	if(month.length() < 2) return false;
+	ss.clear();
+	ss.str(month);
+	ss >> date.month;
+	if (ss.fail()) return false;
 
 	pos = key.size() - year.size() - month.size();
 	day = key.substr(year.size() + 1 + month.size() + 1);
-	{
-		std::stringstream ss(day);
-		ss >> date.day;
-	}
+	if(day.length() < 2) return false;
+	ss.clear();
+	ss.str(day);
+	ss >> date.day;
+	if (ss.fail()) return false;
 
 	if (date.year < 1 || date.month < 1 || date.day < 1 || date.month > 12)
 		return false;

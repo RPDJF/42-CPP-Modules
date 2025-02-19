@@ -23,7 +23,8 @@ static void runRoutine(char *file, const BitcoinExchange& bitcoinExchange) {
 		}
 		key = line.substr(0, sep);
 		if (!BitcoinExchange::dateChecker(key)) {
-			std::cerr << C_RED << "Error: " << "not a valid date => " << key << std::endl;
+			std::cerr << C_RED << "Error: " << "not a valid date => " << C_RESET << key << std::endl;
+			continue;
 		}
 		strvalue = line.substr(key.size() + 3, line.size() - key.size() - 3);
 		std::stringstream ss(strvalue);
@@ -38,6 +39,8 @@ static void runRoutine(char *file, const BitcoinExchange& bitcoinExchange) {
 		std::map<std::string, double>::const_iterator it = bitcoinExchange.retrieveData(key);
 		if (it != bitcoinExchange.end()) {
 			std::cout << key << " => " << value << " = " << it->second * value << std::endl;
+		} else {
+			std::cout << key << " => " << "not found" << std::endl;
 		}
 	}	
 }
