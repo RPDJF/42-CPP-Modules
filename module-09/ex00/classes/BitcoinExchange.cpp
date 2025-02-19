@@ -51,51 +51,80 @@ BitcoinExchange::~BitcoinExchange() {
 	this->db_.clear();
 }
 
-static const std::map<std::string, double>::const_iterator findClosest(const std::string& base, const std::map<std::string, double>::const_iterator it1, const std::map<std::string, double>::const_iterator it2) {
-	int base_int;
-	int index1_int;
-	int index2_int;
-	{
-		std::string base_index = base.substr(base.find_last_of('-') + 1, base.size() - base.find_last_of('-') - 1);
-		std::string index1 = it1->first.substr(it1->first.find_last_of('-') + 1, it1->first.size() - it1->first.find_last_of('-') - 1);
-		std::string index2 = it2->first.substr(it2->first.find_last_of('-') + 1, it2->first.size() - it2->first.find_last_of('-') - 1);
-		std::stringstream ss(base_index);
-		ss >> base_int;
-		ss.clear();
-		ss.str(index1);
-		ss >> index1_int;
-		ss.clear();
-		ss.str(index2);
-		ss << index2;
-		ss >> index2_int;
+// i think it may be the worst function i ever wrote on my whole life
+// but hey, it works
+static std::string getPreviousDate(const std::string& refDate) {
+	t_date date;
+	std::string year;
+	std::string month;
+	std::string day;
+	std::stringstream ss;
+	size_t pos;
+
+	// loading str date to t_date structure
+	pos = refDate.find('-');
+	year = refDate.substr(0, pos);
+	ss.clear();
+	ss.str(year);
+	ss >> date.year;
+
+	pos = refDate.find('-', pos + 1);
+	month = refDate.substr(year.size() + 1, pos - (year.size() + 1));
+	ss.clear();
+	ss.str(month);
+	ss >> date.month;
+
+	pos = refDate.size() - year.size() - month.size();
+	day = refDate.substr(year.size() + 1 + month.size() + 1);
+	ss.clear();
+	ss.str(day);
+	ss >> date.day;
+
+	// manually decrementing t_date structure
+	if (date.day <= 1) {
+		if (date.month <= 1) {
+			if (date.year <= 1900) {
+				return "";
+			}
+			date.year--;
+			date.month = 12;
+		}
+		else
+			date.month--;
+		date.day = 31;
+	} else {
+		date.day--;
 	}
-	index1_int -= base_int;
-	index2_int -= base_int;
-	index1_int = std::abs(index1_int);
-	index2_int = std::abs(index2_int);
-	if (index1_int < index2_int)
-		return it1;
-	return it2;
+
+	// building new date string
+	ss.str("");
+	ss.clear();
+	ss << date.year;
+	year = ss.str();
+	ss.str("");
+	ss.clear();
+	ss << date.month;
+	month = ss.str();
+	if (month.length() == 1) month = "0" + month;
+	ss.str("");
+	ss.clear();
+	ss << date.day;
+	day = ss.str();
+	if (day.length() == 1) day = "0" + day;
+	return year + "-" + month + "-" + day;
 }
 
 const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) const {
-	std::map<std::string, double>::const_iterator it = this->db_.begin();
 	std::string q = key;
-	std::string old_q = q;
 
+	if (this->db_.find(key) != this->db_.end()) return this->db_.find(key);
 	while (!q.empty()) {
 		for(std::map<std::string, double>::const_iterator date = this->db_.begin(); date != this->db_.end(); date++) {
 			if (date->first.find(q) != std::string::npos) {
-				if (it == this->db_.begin())
-					it = date;
-				else
-					it = findClosest(old_q, it, date);
+				return date;
 			}
 		}
-		if (it != this->db_.begin())
-			return it;
-		old_q = q;
-		q = q.substr(0, q.size() - 1);
+		q = getPreviousDate(q);
 	}
 	return this->db_.end();
 }
@@ -120,9 +149,9 @@ bool BitcoinExchange::dateChecker(const std::string& key) {
 	std::string month;
 	std::string day;
 	std::stringstream ss;
-
 	size_t pos;
 
+	// loading str date to t_date structure
 	pos = key.find('-');
 	if (pos == std::string::npos) return false;
 	year = key.substr(0, pos);
@@ -149,6 +178,7 @@ bool BitcoinExchange::dateChecker(const std::string& key) {
 	ss >> date.day;
 	if (ss.fail()) return false;
 
+	// checking leap year
 	if (date.year < 1 || date.month < 1 || date.day < 1 || date.month > 12)
 		return false;
 	if (date.month == 2) {
