@@ -81,6 +81,7 @@ static const std::map<std::string, double>::const_iterator findClosest(const std
 const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) const {
 	std::map<std::string, double>::const_iterator it = this->db_.begin();
 	std::string q = key;
+	std::string old_q = q;
 
 	while (!q.empty()) {
 		for(std::map<std::string, double>::const_iterator date = this->db_.begin(); date != this->db_.end(); date++) {
@@ -88,11 +89,12 @@ const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveDat
 				if (it == this->db_.begin())
 					it = date;
 				else
-					it = findClosest(key, it, date);
+					it = findClosest(old_q, it, date);
 			}
 		}
 		if (it != this->db_.begin())
 			return it;
+		old_q = q;
 		q = q.substr(0, q.size() - 1);
 	}
 	return this->db_.end();
