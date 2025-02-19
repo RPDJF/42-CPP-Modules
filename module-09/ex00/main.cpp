@@ -12,9 +12,9 @@ static void runRoutine(char *file, const BitcoinExchange& bitcoinExchange) {
 	std::string key;
 	std::string strvalue;
 	double value;
+	size_t sep;
 	std::getline(input_file, line); // ignore firstline
 
-	size_t sep;
 	while(std::getline(input_file, line)) {
 		sep = line.find(" | ");
 		if (sep == std::string::npos) {
@@ -48,13 +48,12 @@ static void runRoutine(char *file, const BitcoinExchange& bitcoinExchange) {
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		std::cerr << C_RED << "./btc <input.txt>" << C_RESET << std::endl;
+		return 1;
 	}
-	else {
-		try {
-			BitcoinExchange bitcoinExchange("data.csv");
-			runRoutine(argv[1], bitcoinExchange);
-		} catch(const std::exception& e) {
-			std::cerr << C_RED << e.what() << C_RESET << std::endl;
-		}
+	try {
+		BitcoinExchange bitcoinExchange("data.csv");
+		runRoutine(argv[1], bitcoinExchange);
+	} catch(const std::exception& e) {
+		std::cerr << C_RED << "Error: " << e.what() << C_RESET << std::endl;
 	}
 }
