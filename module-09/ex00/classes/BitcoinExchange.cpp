@@ -35,15 +35,23 @@ static void fillDb(std::map<std::string, double>& db, const std::string& data) {
 
 BitcoinExchange::BitcoinExchange(const std::string& data) {
 	fillDb(this->db_, data);
+	if(this->db_.empty()) {
+		this->smallest_year_ = -1;
+		return;
+	}
+	std::stringstream ss(this->db_.begin()->first);
+	ss >> this->smallest_year_;
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy):
-	db_(copy.db_) {}
+	db_(copy.db_),
+	smallest_year_(copy.smallest_year_) {}
 
 const BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& assign) {
 	if(this == &assign)
 		return *this;
 	this->db_ = assign.db_;
+	this->smallest_year_ = assign.smallest_year_;
 	return *this;
 }
 
@@ -53,7 +61,7 @@ BitcoinExchange::~BitcoinExchange() {
 
 // i think it may be the worst function i ever wrote on my whole life
 // but hey, it works
-static std::string getPreviousDate(const std::string& refDate) {
+static std::string getPreviousDate(const std::string& refDate, int smallestYear) {
 	t_date date;
 	std::string year;
 	std::string month;
@@ -83,7 +91,7 @@ static std::string getPreviousDate(const std::string& refDate) {
 	// manually decrementing t_date structure
 	if (date.day <= 1) {
 		if (date.month <= 1) {
-			if (date.year <= 1900) {
+			if (date.year <= smallestYear) {
 				return "";
 			}
 			date.year--;
@@ -124,7 +132,7 @@ const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveDat
 				return date;
 			}
 		}
-		q = getPreviousDate(q);
+		q = getPreviousDate(q, this->smallest_year_);
 	}
 	return this->db_.end();
 }
@@ -177,6 +185,20 @@ bool BitcoinExchange::dateChecker(const std::string& key) {
 	ss.str(day);
 	ss >> date.day;
 	if (ss.fail()) return false;
+
+	// checking if valid str values
+	for(size_t i = 0; i < year.length(); i++) {
+		if(year[i] < '0' || year[i] > '9')
+			return false;
+	}
+	for(size_t i = 0; i < month.length(); i++) {
+		if(month[i] < '0' || month[i] > '9')
+			return false;
+	}
+	for(size_t i = 0; i < day.length(); i++) {
+		if(day[i] < '0' || day[i] > '9')
+			return false;
+	}
 
 	// checking leap year
 	if (date.year < 1 || date.month < 1 || date.day < 1 || date.month > 12)
