@@ -22,20 +22,22 @@ static void runRoutine(char *file, const BitcoinExchange& bitcoinExchange) {
 			continue ;
 		}
 		key = line.substr(0, sep);
-		BitcoinExchange::dateChecker(key);
+		if (!BitcoinExchange::dateChecker(key)) {
+			std::cerr << C_RED << "Error: " << "not a valid date => " << key << std::endl;
+		}
 		strvalue = line.substr(key.size() + 3, line.size() - key.size() - 3);
 		std::stringstream ss(strvalue);
 		ss >> value;
 		if (value < 0) {
 			std::cerr << C_RED << "Error: " << "not a positive number." << C_RESET << std::endl;
 			continue;
-		} else if (value < INT_MIN || value > INT_MAX) {
+		} else if (value > 1000) {
 			std::cerr << C_RED << "Error: " << "too large a number." << C_RESET << std::endl;
 			continue;
 		}
 		std::map<std::string, double>::const_iterator it = bitcoinExchange.retrieveData(key);
 		if (it != bitcoinExchange.end()) {
-			std::cout << it->first << " " << it->second << std::endl;
+			std::cout << key << " => " << value << " = " << it->second * value << std::endl;
 		}
 	}	
 }

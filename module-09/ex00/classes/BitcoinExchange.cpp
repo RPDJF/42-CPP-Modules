@@ -40,11 +40,30 @@ BitcoinExchange::~BitcoinExchange() {
 }
 
 const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& data) const {
-	return this->db_.find(data);
+	std::map<std::string, double>::const_iterator it;
+	std::string q = data;
+	while (!q.empty()) {
+		for(std::map<std::string, double>::const_iterator date = this->db_.begin(); date != this->db_.end(); date++) {
+			if (date->first.find(q) != std::string::npos)
+				return date;
+		}
+		q = q.substr(0, q.size() - 1);
+	}
+	return this->db_.end();
 }
 
 const std::map<std::string, double>::const_iterator BitcoinExchange::end() const {
 	return this->db_.end();
+}
+
+static bool isLeapYear(int year) {
+	if (year % 4)
+		return false;
+	if (year % 100)
+		return true;
+	if (year % 400)
+		return false;
+	return true;
 }
 
 bool BitcoinExchange::dateChecker(const std::string& key) {
@@ -55,20 +74,17 @@ bool BitcoinExchange::dateChecker(const std::string& key) {
 
 	size_t pos;
 
-	std::cout << "checking: " << key << std::endl;
 	pos = key.find('-');
 	if (pos == std::string::npos) return false;
 	year = key.substr(0, pos);
-	//std::cout << "year: '" << year << '\'' << std::endl;
 	{
-		std::stringstream ss(year);
+		std::stringstream ss(key.substr(0, pos));
 		ss >> date.year;
 	}
 
 	pos = key.find('-', pos + 1);
 	if (pos == std::string::npos) return false;
 	month = key.substr(year.size() + 1, pos - (year.size() + 1));
-	//std::cout << "month: '" << month << '\'' << std::endl;
 	{
 		std::stringstream ss(month);
 		ss >> date.month;
@@ -76,24 +92,24 @@ bool BitcoinExchange::dateChecker(const std::string& key) {
 
 	pos = key.size() - year.size() - month.size();
 	day = key.substr(year.size() + 1 + month.size() + 1);
-	//std::cout << "day: '" << day << '\'' << std::endl;
 	{
 		std::stringstream ss(day);
 		ss >> date.day;
 	}
 
-	std::cout << "date: '" << year << "-" << month << "-" << day << std::endl << std::endl;
-	if (date.month < 1 || date.month > 12)
-		return false;
-	else if (date.year < 1)
+	if (date.year < 1 || date.month < 1 || date.day < 1 || date.month > 12)
 		return false;
 	if (date.month == 2) {
-		if (date.year % 4 == 0) {
-			if (date.year % 100 == 0 && date.year % 400) {
-				// pas bisextile
-			}
-			// bisextile
-		}
+		if (isLeapYear(date.year) && date.day > 29)
+			return false;
+		else if (!isLeapYear(date.year) && date.day > 28)
+			return false;
+	} else if (date.month == 4 || date.month == 6 || date.month == 9 ||date.month == 11) {
+		if (date.day > 30)
+			return false;
+	} else {
+		if (date.day > 31)
+			return false;
 	}
 	return true;
 }
