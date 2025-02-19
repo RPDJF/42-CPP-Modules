@@ -7,6 +7,7 @@
 # include <climits>
 # include <fstream>
 # include <iostream>
+# include <algorithm>
 
 typedef struct s_date {
 	int year;

@@ -39,14 +39,48 @@ BitcoinExchange::~BitcoinExchange() {
 	this->db_.clear();
 }
 
+static const std::map<std::string, double>::const_iterator findClosest(const std::string& base, const std::map<std::string, double>::const_iterator it1, const std::map<std::string, double>::const_iterator it2) {
+	int base_int;
+	int index1_int;
+	int index2_int;
+	{
+		std::string base_index = base.substr(base.find_last_of('-') + 1, base.size() - base.find_last_of('-') - 1);
+		std::string index1 = it1->first.substr(it1->first.find_last_of('-') + 1, it1->first.size() - it1->first.find_last_of('-') - 1);
+		std::string index2 = it2->first.substr(it2->first.find_last_of('-') + 1, it2->first.size() - it2->first.find_last_of('-') - 1);
+		std::stringstream ss(base_index);
+		ss >> base_int;
+		ss.clear();
+		ss.str(index1);
+		ss >> index1_int;
+		ss.clear();
+		ss.str(index2);
+		ss << index2;
+		ss >> index2_int;
+	}
+	index1_int -= base_int;
+	index2_int -= base_int;
+	index1_int = std::abs(index1_int);
+	index2_int = std::abs(index2_int);
+	if (index1_int < index2_int)
+		return it1;
+	return it2;
+}
+
 const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& data) const {
-	std::map<std::string, double>::const_iterator it;
+	std::map<std::string, double>::const_iterator it = this->db_.begin();
 	std::string q = data;
+
 	while (!q.empty()) {
 		for(std::map<std::string, double>::const_iterator date = this->db_.begin(); date != this->db_.end(); date++) {
-			if (date->first.find(q) != std::string::npos)
-				return date;
+			if (date->first.find(q) != std::string::npos) {
+				if (it == this->db_.begin())
+					it = date;
+				else
+					it = findClosest(data, it, date);
+			}
 		}
+		if (it != this->db_.begin())
+			return it;
 		q = q.substr(0, q.size() - 1);
 	}
 	return this->db_.end();
