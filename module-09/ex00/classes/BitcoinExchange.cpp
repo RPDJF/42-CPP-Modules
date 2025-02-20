@@ -63,88 +63,15 @@ BitcoinExchange::~BitcoinExchange() {
 	this->db_.clear();
 }
 
-// i think it may be the worst function i ever wrote on my whole life
-// but hey, it works
-static std::string getPreviousDate(const std::string& refDate, int smallestYear, int biggestYear) {
-	t_date date;
-	std::string year;
-	std::string month;
-	std::string day;
-	std::stringstream ss;
-	size_t pos;
-
-	// loading str date to t_date structure
-	pos = refDate.find('-');
-	year = refDate.substr(0, pos);
-	ss.clear();
-	ss.str(year);
-	ss >> date.year;
-
-	pos = refDate.find('-', pos + 1);
-	month = refDate.substr(year.size() + 1, pos - (year.size() + 1));
-	ss.clear();
-	ss.str(month);
-	ss >> date.month;
-
-	pos = refDate.size() - year.size() - month.size();
-	day = refDate.substr(year.size() + 1 + month.size() + 1);
-	ss.clear();
-	ss.str(day);
-	ss >> date.day;
-
-	// manually decrementing t_date structure
-	if (date.day <= 1) {
-		if (date.month <= 1) {
-			if (date.year <= smallestYear) {
-				return "";
-			}
-			date.year--;
-			date.month = 12;
-		}
-		else
-			date.month--;
-		date.day = 31;
-	} else {
-		date.day--;
-	}
-
-	if (date.year > biggestYear) {
-		date.year = biggestYear;
-		date.month = 12;
-		date.day = 31;
-	}
-
-	// building new date string
-	ss.str("");
-	ss.clear();
-	ss << date.year;
-	year = ss.str();
-	ss.str("");
-	ss.clear();
-	ss << date.month;
-	month = ss.str();
-	if (month.length() == 1) month = "0" + month;
-	ss.str("");
-	ss.clear();
-	ss << date.day;
-	day = ss.str();
-	if (day.length() == 1) day = "0" + day;
-	return year + "-" + month + "-" + day;
-}
-
-const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) const {
+const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) {
 	std::string q = key;
 
+	if (this->db_.empty()) return this->db_.end();
 	if (this->db_.find(key) != this->db_.end()) return this->db_.find(key);
-	while (!q.empty()) {
-		for(std::map<std::string, double>::const_iterator date = this->db_.begin(); date != this->db_.end(); date++) {
-			if (date->first.find(q) != std::string::npos) {
-				return date;
-			}
-		}
-		q = getPreviousDate(q, this->smallest_year_, this->biggest_year_);
-	}
-	return this->db_.end();
+	this->db_[key] = -1;
+	const std::string upperRef = this->db_.find(key).operator--()->first;
+	this->db_.erase(this->db_.find(key));
+	return this->db_.find(upperRef);
 }
 
 const std::map<std::string, double>::const_iterator BitcoinExchange::end() const {

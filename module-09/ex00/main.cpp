@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <climits>
 
-static void runRoutine(char *file, const BitcoinExchange& bitcoinExchange) {
+static void runRoutine(char *file, BitcoinExchange& bitcoinExchange) {
 	std::ifstream input_file(file);
 	if (!input_file.good())
 		throw std::runtime_error("couldn't open '" + std::string(file) + "' input file");
