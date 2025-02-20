@@ -66,6 +66,10 @@ const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveDat
 	if (find != this->db_.end()) return find;
 	this->db_[key] = -1;
 	find = this->db_.find(key);
+	if (find == this->db_.begin()) {
+		this->db_.erase(find);
+		return this->db_.end();
+	}
 	const std::string upperRef = (--find)->first;
 	this->db_.erase(++find);
 	return this->db_.find(upperRef);
