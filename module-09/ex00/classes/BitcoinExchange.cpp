@@ -9,6 +9,7 @@ static void fillDb(std::map<std::string, double>& db, const std::string& data) {
 	std::string strvalue;
 	double value;
 	size_t sep;
+	std::stringstream ss;
 
 	while (std::getline(db_file, line)) {
 		if (line.find("date,exchange_rate") != std::string::npos)
@@ -24,7 +25,8 @@ static void fillDb(std::map<std::string, double>& db, const std::string& data) {
 			continue;
 		}
 		strvalue = line.substr(key.size() + 1, line.size() - key.size() - 1);
-		std::stringstream ss(strvalue);
+		ss.clear();
+		ss.str(strvalue);
 		ss >> value;
 		if (ss.fail()) {
 			std::cerr << C_RED << "Error (data input): " << "failed parsing value in => " << line << C_RESET << std::endl;
