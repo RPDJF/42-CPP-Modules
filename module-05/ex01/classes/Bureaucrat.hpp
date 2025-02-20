@@ -31,6 +31,8 @@ class Bureaucrat {
 		bool operator>(int grade) const;
 		int getGrade() const;
 		void signForm(Form& form) const;
+		void incrementGrade();
+		void decrementGrade();
 };
 
 std::ostream& operator<<(std::ostream& stream, const Bureaucrat& bureaucrat);
