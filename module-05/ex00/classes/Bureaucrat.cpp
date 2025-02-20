@@ -58,3 +58,17 @@ const char * Bureaucrat::GradeTooLowException::what() const throw() {
 const char * Bureaucrat::GradeTooHighException::what() const throw() {
 	return "grade is too high!";
 }
+
+void Bureaucrat::incrementGrade() {
+	if ((this->grade_ - 1) < this->MAX_GRADE) {
+		throw Bureaucrat::GradeTooHighException();
+	}
+	--this->grade_;
+}
+
+void Bureaucrat::decrementGrade() {
+	if ((this->grade_ + 1) > this->MIN_GRADE) {
+		throw Bureaucrat::GradeTooLowException();
+	}
+	++this->grade_;
+}

@@ -22,6 +22,26 @@ void throwTests() {
 		std::cout << "throw dected" << std::endl;
 		std::cerr << e.what() << std::endl;
 	}
+	try {
+		const Bureaucrat david("David", Bureaucrat::MAX_GRADE - 1);
+	} catch(const std::exception& e) {
+		std::cout << "throw dected" << std::endl;
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		Bureaucrat david("David", Bureaucrat::MIN_GRADE);
+		david.decrementGrade();
+	} catch(const std::exception& e) {
+		std::cout << "throw dected" << std::endl;
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		Bureaucrat david("David", Bureaucrat::MAX_GRADE);
+		david.incrementGrade();
+	} catch(const std::exception& e) {
+		std::cout << "throw dected" << std::endl;
+		std::cerr << e.what() << std::endl;
+	}
 	std::cout << C_YELLOW << "ENDING THROWTESTS()" << C_RESET << std::endl << std::endl;
 }
 
