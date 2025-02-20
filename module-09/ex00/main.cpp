@@ -4,6 +4,20 @@
 #include <stdexcept>
 #include <climits>
 
+static bool isValidValue(const std::string& valueRef) {
+	bool isDecimal = false;
+	for(size_t i = 0; i < valueRef.length(); i++) {
+		if (valueRef[i] == '.') {
+			if (isDecimal)
+				return false;
+			isDecimal = true;
+		}
+		else if (valueRef[i] < '0' || valueRef[i] > '9')
+			return false;
+	}
+	return true;
+}
+
 static void runRoutine(char *file, BitcoinExchange& bitcoinExchange) {
 	std::ifstream input_file(file);
 	if (!input_file.good())
@@ -35,6 +49,10 @@ static void runRoutine(char *file, BitcoinExchange& bitcoinExchange) {
 			continue;
 		} else if (value > 1000) {
 			std::cerr << C_RED << "Error: " << "too large a number." << C_RESET << std::endl;
+			continue;
+		}
+		if (!isValidValue(strvalue)) {
+			std::cerr << C_RED << "Error: " << "not a valid value => " << C_RESET << line << std::endl;
 			continue;
 		}
 		std::map<std::string, double>::const_iterator it = bitcoinExchange.retrieveData(key);
