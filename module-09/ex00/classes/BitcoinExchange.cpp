@@ -9,9 +9,10 @@ static void fillDb(std::map<std::string, double>& db, const std::string& data) {
 	std::string strvalue;
 	double value;
 	size_t sep;
-	std::getline(db_file, line); // ignore firstline
 
 	while (std::getline(db_file, line)) {
+		if (line.find("date,exchange_rate") != std::string::npos)
+			continue;
 		sep = line.find(',');
 		if (sep == std::string::npos) {
 			std::cerr << C_RED << "Error (data input): " << "not a valid line => " << line << C_RESET << std::endl;
