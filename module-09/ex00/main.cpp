@@ -28,13 +28,14 @@ static void runRoutine(char *file, BitcoinExchange& bitcoinExchange) {
 	double value;
 	size_t sep;
 
+	std::stringstream ss;
 	while(std::getline(input_file, line)) {
 		if (line.find("date | value") != std::string::npos)
 			continue;
 		sep = line.find(" | ");
 		if (sep == std::string::npos) {
 			std::cerr << C_RED << "Error: " << "bad input => " << C_RESET << line << std::endl;
-			continue ;
+			continue;
 		}
 		key = line.substr(0, sep);
 		if (!BitcoinExchange::dateChecker(key)) {
@@ -42,7 +43,8 @@ static void runRoutine(char *file, BitcoinExchange& bitcoinExchange) {
 			continue;
 		}
 		strvalue = line.substr(key.size() + 3, line.size() - key.size() - 3);
-		std::stringstream ss(strvalue);
+		ss.clear();
+		ss.str(strvalue);
 		ss >> value;
 		if (value < 0) {
 			std::cerr << C_RED << "Error: " << "not a positive number." << C_RESET << std::endl;
