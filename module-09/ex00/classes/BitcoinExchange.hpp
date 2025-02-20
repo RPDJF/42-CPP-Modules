@@ -19,8 +19,6 @@ typedef struct s_date {
 class BitcoinExchange {
 	private:
 		std::map<std::string, double> db_;
-		int smallest_year_;
-		int biggest_year_;
 	public:
 		BitcoinExchange(const std::string& data);
 		BitcoinExchange(const BitcoinExchange&);

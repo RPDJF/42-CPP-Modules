@@ -36,26 +36,17 @@ static void fillDb(std::map<std::string, double>& db, const std::string& data) {
 BitcoinExchange::BitcoinExchange(const std::string& data) {
 	fillDb(this->db_, data);
 	if(this->db_.empty()) {
-		this->smallest_year_ = -1;
-		this->biggest_year_ = -1;
 		return;
 	}
-	std::stringstream ss(this->db_.begin()->first);
-	ss >> this->smallest_year_;
-	ss.clear();
-	ss.str((this->db_.end().operator--())->first);
-	ss >> this->biggest_year_;
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy):
-	db_(copy.db_),
-	smallest_year_(copy.smallest_year_) {}
+	db_(copy.db_) {}
 
 const BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& assign) {
 	if(this == &assign)
 		return *this;
 	this->db_ = assign.db_;
-	this->smallest_year_ = assign.smallest_year_;
 	return *this;
 }
 
