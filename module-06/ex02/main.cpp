@@ -26,7 +26,8 @@ Base *generate(void) {
 
 void identify(Base *p) {
 	std::cout << C_CYAN << "void indentify(Base*)> " << C_RESET << "indentified " << C_YELLOW;
-	if (dynamic_cast<A*>(p)) std::cout << "A class" << C_RESET << std::endl;
+	if (!p) std::cout << "base is null" << C_RESET << std::endl;
+	else if (dynamic_cast<A*>(p)) std::cout << "A class" << C_RESET << std::endl;
 	else if (dynamic_cast<B*>(p)) std::cout << "B class" << C_RESET << std::endl;
 	else if (dynamic_cast<C*>(p)) std::cout << "C class" << C_RESET << std::endl;
 	else std::cout << "unknown class" << C_RESET << std::endl;
