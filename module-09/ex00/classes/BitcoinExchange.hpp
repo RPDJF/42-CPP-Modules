@@ -24,7 +24,7 @@ class BitcoinExchange {
 		BitcoinExchange(const BitcoinExchange&);
 		const BitcoinExchange& operator=(const BitcoinExchange&);
 		~BitcoinExchange();
-		const std::map<std::string, double>::const_iterator retrieveData(const std::string&);
+		const std::map<std::string, double>::const_iterator retrieveData(const std::string&) const;
 		const std::map<std::string, double>::const_iterator end() const;
 		static bool dateChecker(const std::string&);
 };

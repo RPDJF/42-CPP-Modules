@@ -57,22 +57,12 @@ BitcoinExchange::~BitcoinExchange() {
 	this->db_.clear();
 }
 
-const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) {
-	std::string q = key;
-
-	if (this->db_.empty()) return this->db_.end();
-	std::map<std::string, double>::iterator find;
-	find = this->db_.find(key);
-	if (find != this->db_.end()) return find;
-	this->db_[key] = -1;
-	find = this->db_.find(key);
-	if (find == this->db_.begin()) {
-		this->db_.erase(find);
+const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) const {
+	std::map<std::string, double>::const_iterator it = this->db_.lower_bound(key);
+	if (it == this->db_.begin() || it == this->db_.end())
 		return this->db_.end();
-	}
-	const std::string upperRef = (--find)->first;
-	this->db_.erase(++find);
-	return this->db_.find(upperRef);
+	else
+		return --it;
 }
 
 const std::map<std::string, double>::const_iterator BitcoinExchange::end() const {
