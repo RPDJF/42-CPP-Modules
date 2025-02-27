@@ -46,16 +46,16 @@ endef
 export APP_HEADER
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -Wshadow -Wno-shadow
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC =	main \
 
-SRC +=	utils/MyStd \
+SRC +=	utils/Iter \
 
 
 CPPFILES = $(SRC:%=%.cpp)
 
-NAME =	inter
+NAME =	iter
 
 all: $(NAME)
 

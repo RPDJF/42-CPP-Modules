@@ -1,11 +1,11 @@
-#ifndef MYSTD_HPP
-# define MYSTD_HPP
+#ifndef WHATEVER_HPP
+# define WHATEVER_HPP
 
 #include <string>
 #include <ostream>
 #include <sstream>
 
-class MyStd {
+class Whatever {
 	public:
 		template<typename T>
 		static std::string to_string(const T& value)  {
@@ -30,12 +30,6 @@ class MyStd {
 			if (v1 > v2)
 				return v1;
 			return v2;
-		}
-		template<typename T>
-		static void iter(T* arr, size_t len, void (*f)(T)) {
-			for(size_t i = 0; i < len; i++) {
-				f(arr[i]);
-			}
 		}
 };
 

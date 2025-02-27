@@ -1,13 +1,13 @@
 #include "utils/colors.h"
-#include "utils/MyStd.hpp"
+#include "utils/Whatever.hpp"
 #include <iostream>
 
 template<typename T>
-static void swap(T& v1, T& v2) { MyStd::swap(v1, v2); }
+static void swap(T& v1, T& v2) { Whatever::swap(v1, v2); }
 template<typename T>
-static const T& min(const T& v1, const T& v2) { return MyStd::min(v1, v2); }
+static const T& min(const T& v1, const T& v2) { return Whatever::min(v1, v2); }
 template<typename T>
-static const T& max(const T& v1, const T& v2) { return MyStd::max(v1, v2); }
+static const T& max(const T& v1, const T& v2) { return Whatever::max(v1, v2); }
 
 static void swapTests() {
 	std::cout << C_YELLOW << "RUNNING SWAPTESTS() FOR STRINGS" << C_RESET << std::endl;
