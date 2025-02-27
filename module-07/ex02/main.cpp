@@ -1,5 +1,5 @@
 #include "utils/colors.h"
-#include "classes/Array.hpp"
+#include "./Array.hpp"
 #include <iostream>
 
 static void basicTests() {

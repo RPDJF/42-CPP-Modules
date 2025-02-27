@@ -50,7 +50,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC =	main \
 
-SRC +=	classes/Array \
+SRC +=	Array \
 
 
 CPPFILES = $(SRC:%=%.cpp)
@@ -94,7 +94,7 @@ $(CPPFILES): header
 $(NAME): $(CPPFILES) $(BETTERFT_LIB)
 		@echo "$$APP_HEADER"
 		@printf "\t🤖 Compiling $(NAME)...\r"
-		@$(CC) $(CPPFILES) $(CFLAGS) -o $(NAME)
+		@$(CC) $(CPPFILES) $(CFLAGS) -o $(NAME) -I.
 		@printf "\33[2K"
 		@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅\n"
 
