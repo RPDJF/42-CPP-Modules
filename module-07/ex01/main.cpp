@@ -1,5 +1,5 @@
 #include "utils/colors.h"
-#include "utils/Iter.hpp"
+#include "./Iter.hpp"
 #include <iostream>
 
 template<typename T>
@@ -29,5 +29,4 @@ static int runTests() {
 
 int main() {
 	runTests();
-	//ScalarConverter::convert(argv[1]);
 }
