@@ -24,6 +24,19 @@ static const T& min(const T& v1, const T& v2) {
 	return v2;
 }
 template<typename T>
+static const T& max(const T& v1, const T& v2) {
+	if (v1 > v2)
+		return v1;
+	return v2;
+}
+template<typename T>
+static void iter(T* arr, size_t len, void (*f)(T &)) {
+	if (!arr || !f)
+		return;
+	for(size_t i = 0; i < len; i++)
+		f(arr[i]);
+}
+template<typename T>
 static void iter(T* arr, size_t len, void (*f)(const T &)) {
 	if (!arr || !f)
 		return;

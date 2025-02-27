@@ -3,7 +3,7 @@
 #include <iostream>
 
 template<typename T>
-static void print(T var) {
+static void print(T& var) {
 	std::cout << var << " ";
 }
 
@@ -11,12 +11,12 @@ static void basicTests() {
 	std::cout << C_YELLOW << "RUNNING BASICTESTS() FOR STRINGS" << C_RESET << std::endl;
 	{
 		int arr[] = {0, 3, 1, 5, 8,-1, 24};
-		iter(arr, 7, &print);
+		iter(arr, 7, print<int>);
 		std::cout << std::endl;
 	}
 	{
 		std::string arr[] = {"hello", "world", "how", "are","you", "today", "?"};
-		iter(arr, 7, &print);
+		iter(arr, 7, print<const std::string>);
 		std::cout << std::endl;
 	}
 	std::cout << C_YELLOW << "ENDING BASICTESTS()" << C_RESET << std::endl << std::endl;
