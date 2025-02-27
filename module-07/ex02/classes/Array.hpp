@@ -30,6 +30,10 @@ class Array {
 			this->len_ = assign.len_;
 			return *this;
 		}
+		const T& operator[](unsigned int idx) const {
+			if (idx >= this->len_) throw std::out_of_range("index is out of range");
+			return this->arr_[idx];
+		}
 		T& operator[](unsigned int idx) {
 			if (idx >= this->len_) throw std::out_of_range("index is out of range");
 			return this->arr_[idx];

@@ -11,12 +11,12 @@ static void basicTests() {
 	std::cout << C_YELLOW << "RUNNING BASICTESTS() FOR STRINGS" << C_RESET << std::endl;
 	{
 		int arr[] = {0, 3, 1, 5, 8,-1, 24};
-		Iter::iter(arr, 7, &print);
+		iter(arr, 7, &print);
 		std::cout << std::endl;
 	}
 	{
 		std::string arr[] = {"hello", "world", "how", "are","you", "today", "?"};
-		Iter::iter(arr, 7, &print);
+		iter(arr, 7, &print);
 		std::cout << std::endl;
 	}
 	std::cout << C_YELLOW << "ENDING BASICTESTS()" << C_RESET << std::endl << std::endl;
