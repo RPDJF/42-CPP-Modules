@@ -120,5 +120,4 @@ static int runTests() {
 
 int main() {
 	runTests();
-	//ScalarConverter::convert(argv[1]);
 }

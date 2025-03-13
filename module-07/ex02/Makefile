@@ -50,7 +50,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC =	main \
 
-SRC +=	Array \
+SRC += \
 
 
 CPPFILES = $(SRC:%=%.cpp)
