@@ -62,7 +62,7 @@ all: $(NAME)
 debug: fclean $(CPPFILES)
 		@echo "$$APP_HEADER"
 		@printf "\t🤖 Compiling $(NAME)...\r"
-		@$(CC) -g $(CPPFILES) $(CFLAGS) -o $(NAME)
+		@$(CC) -g3 $(CPPFILES) $(CFLAGS) -o $(NAME) -D DEBUG=1
 		@printf "\33[2K"
 		@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
 		@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
