@@ -30,6 +30,9 @@ void Span::addNumber(int nb) {
 }
 
 unsigned int Span::shortestSpan() const {
+	if (this->arr_.size() < 2)
+		throw std::runtime_error("not enough span items to compare");
+	std::sort(this->arr_.begin(), this->arr_.end());
 	std::vector<long int> rslt(this->arr_.size());
 	std::adjacent_difference(this->arr_.begin(), this->arr_.end(), rslt.begin());
 	for(std::vector<long int>::iterator i = rslt.begin(); i != rslt.end(); i++)
@@ -40,6 +43,7 @@ unsigned int Span::shortestSpan() const {
 unsigned int Span::longestSpan() const {
 	if (this->arr_.size() < 2)
 		throw std::runtime_error("not enough span items to compare");
+	std::sort(this->arr_.begin(), this->arr_.end());
 	long biggestElem = (long)*std::max_element(this->arr_.begin(), this->arr_.end());
 	long smallestElem = (long)*std::min_element(this->arr_.begin(), this->arr_.end());
 	return biggestElem - smallestElem;
