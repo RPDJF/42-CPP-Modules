@@ -88,6 +88,14 @@ void PmergeMe::elementMove(std::vector<unsigned int>& src, std::vector<unsigned 
 void PmergeMe::insertSortInit_() {
 	if (this->level_ < 1) {
 		this->step_ = 0; // breaks is nothing left
+		if (!this->pend_.empty()) {
+			std::cerr << C_RED << "pend_ is not empty" << C_RESET << std::endl;
+			this->elementMove(this->pend_, this->sequence_, 0, this->pend_.size());
+		}
+		if (!this->out_.empty()) {
+			std::cerr << C_RED << "out_ is not empty" << C_RESET << std::endl;
+			this->elementMove(this->out_, this->sequence_, 0, this->out_.size());
+		}
 		return;
 	}
 	#if DEBUG
@@ -138,16 +146,18 @@ void PmergeMe::insertSort_() {
 				trigger = true;
 			}
 		}
-		if (!trigger)
-			this->elementMove(this->pend_, temp, this->pend_.size() - this->base_, this->base_);
+		if (!trigger) {
+			// might need some rework
+			size_t index2move = this->base_ < this->pend_.size() ? this->pend_.size() - this->base_ : 0;
+			this->elementMove(this->pend_, temp, index2move, this->base_);
+		}
 		this->main_ = temp;
 	}
 	this->sequence_.clear();
 	this->elementMove(this->main_, this->sequence_, 0, this->main_.size());
 	this->elementMove(this->out_, this->sequence_, 0, this->out_.size());
 	#if DEBUG
-	std::cout << "new sequence: " << std::endl;	
-	this->printSequence();
+	this->printStacks();
 	std::cout << std::endl;
 	#endif
 	this->level_--;
