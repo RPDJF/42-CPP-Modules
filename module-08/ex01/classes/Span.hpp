@@ -1,12 +1,14 @@
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
+# include <numeric>
 # include <stdexcept>
 # include <climits>
 # include <vector>
 # include <cstdlib>
 # include <iostream>
 # include <ctime>
+# include <algorithm>
 
 class Span {
 	private:

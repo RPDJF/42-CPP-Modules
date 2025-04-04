@@ -30,33 +30,19 @@ void Span::addNumber(int nb) {
 }
 
 unsigned int Span::shortestSpan() const {
-	if (this->arr_.size() < 2)
-		throw std::runtime_error("not enough span items to compare");
-	long rslt = INT_MAX;
-	long tmp;
-	for(std::vector<int>::const_iterator i = this->arr_.begin(); i != this->arr_.end(); i++) {
-		for(std::vector<int>::const_iterator j = this->arr_.begin(); j < this->arr_.end(); j++) {
-			if (i == j) continue;
-			if ((tmp = std::abs(static_cast<long>(*i) - static_cast<long>(*j))) < rslt)
-				rslt = tmp;
-		}
-	}
-	return rslt;
+	std::vector<long int> rslt(this->arr_.size());
+	std::adjacent_difference(this->arr_.begin(), this->arr_.end(), rslt.begin());
+	for(std::vector<long int>::iterator i = rslt.begin(); i != rslt.end(); i++)
+		*i = std::abs(*i);
+	return *std::min_element(rslt.begin() + 1, rslt.end());
 }
 
 unsigned int Span::longestSpan() const {
 	if (this->arr_.size() < 2)
 		throw std::runtime_error("not enough span items to compare");
-	long rslt = 0;
-	long tmp;
-	for(std::vector<int>::const_iterator i = this->arr_.begin(); i != this->arr_.end(); i++) {
-		for(std::vector<int>::const_iterator j = this->arr_.begin(); j < this->arr_.end(); j++) {
-			if (i == j) continue;
-			if ((tmp = std::abs(static_cast<long>(*i) - static_cast<long>(*j))) > rslt)
-				rslt = tmp;
-		}
-	}
-	return rslt;
+	long biggestElem = (long)*std::max_element(this->arr_.begin(), this->arr_.end());
+	long smallestElem = (long)*std::min_element(this->arr_.begin(), this->arr_.end());
+	return biggestElem - smallestElem;
 }
 
 void Span::fill(std::vector<int>::iterator first, std::vector<int>::iterator last) {
