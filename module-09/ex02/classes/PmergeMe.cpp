@@ -3,7 +3,8 @@
 PmergeMe::PmergeMe(char **argv, int argc):
 	step_(1),
 	level_(1),
-	base_(2) {
+	base_(2),
+	jacob_lv_(3) {
 	this->init_(argv, argc);
 }
 
@@ -14,7 +15,8 @@ PmergeMe::PmergeMe(const PmergeMe& copy):
 	out_(copy.out_),
 	step_(copy.step_),
 	level_(copy.level_),
-	base_(copy.base_) {}
+	base_(copy.base_),
+	jacob_lv_(copy.jacob_lv_) {}
 
 PmergeMe::~PmergeMe() { this->sequence_.clear(); }
 
@@ -28,6 +30,7 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& assign) {
 	this->step_ = assign.step_;
 	this->level_ = assign.level_;
 	this->base_ = assign.base_;
+	this->jacob_lv_ = assign.jacob_lv_;
 	return *this;
 }
 
@@ -63,10 +66,8 @@ void PmergeMe::mergeSort_() {
 	if (this->base_ * 2 <= this->sequence_.size()) {
 		this->level_++;
 		this->base_ *= 2;
-		this->mergeSort_();
-	} else {
+	} else
 		this->step_ = 2;
-	}
 }
 
 void PmergeMe::elementMove(std::vector<unsigned int>& src, std::vector<unsigned int>& dest, size_t idx, size_t size) {
@@ -126,12 +127,13 @@ static int jacobsthal(int num) {
 
 void PmergeMe::insertSort_() {
 	bool trigger;
-	size_t jac = jacobsthal(this->level_);
+	size_t elements2move = jacobsthal(this->jacob_lv_) - jacobsthal(this->jacob_lv_ - 1);
+	this->jacob_lv_++;
 
 	#if DEBUG
-	std::cout << C_MAGENTA << "[Insert sort]" C_RESET << std::endl << "jacobsthal: " << jac << std::endl;
+	std::cout << C_MAGENTA << "[Insert sort]" C_RESET << std::endl << "jacobsthal: " << elements2move << std::endl;
 	#endif
-	for(size_t i = 0; i < jac; i++) {
+	for(size_t i = 0; i < elements2move; i++) {
 		trigger = false;
 		if (this->pend_.empty())
 			break;
