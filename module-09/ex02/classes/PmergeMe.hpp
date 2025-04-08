@@ -26,6 +26,7 @@ class PmergeMe {
 		void init_(char **argv, int argc);
 		void insertSortInit_();
 		void elementMove(std::vector<unsigned int>& src, std::vector<unsigned int>& dest, size_t idx, size_t size);
+		void binarySearch(unsigned int value, size_t range);
 		void printStack_(const std::vector<unsigned int>& stack) const;
 		template <typename T>
 		bool isLess(T t1, T t2) {

@@ -127,13 +127,18 @@ static int jacobsthal(int num) {
 
 void PmergeMe::insertSort_() {
 	bool trigger;
-	size_t elements2move = jacobsthal(this->jacob_lv_) - jacobsthal(this->jacob_lv_ - 1);
+	size_t jac = jacobsthal(this->jacob_lv_);
+	size_t past_jac = jacobsthal(this->jacob_lv_ - 1);
+	size_t insertion = jac - past_jac;
+	size_t range = jac + past_jac - 1;
 	this->jacob_lv_++;
 
 	#if DEBUG
-	std::cout << C_MAGENTA << "[Insert sort]" C_RESET << std::endl << "jacobsthal: " << elements2move << std::endl;
+	std::cout << C_MAGENTA << "[Insert sort]" C_RESET << std::endl << "jacobsthal num: " << jac << std::endl << "insertion: " << insertion << std::endl;
 	#endif
-	for(size_t i = 0; i < elements2move; i++) {
+	if (!this->pend_.empty())
+		this->binarySearch(3, range);
+	for(size_t i = 0; i < insertion; i++) {
 		trigger = false;
 		if (this->pend_.empty())
 			break;
@@ -195,6 +200,30 @@ void PmergeMe::printStack_(const std::vector<unsigned int>& stack) const {
 void PmergeMe::printSequence() const {
 	this->printStack_(this->sequence_);
 	std::cout << std::endl;
+}
+
+void PmergeMe::binarySearch(unsigned int value, size_t range) {
+	if (range > this->pend_.size() / (this->base_ / 2))
+		range = this->pend_.size() / (this->base_ / 2);
+	
+	size_t begin = 0;
+	size_t end = range;
+	size_t mid = (end - begin) / 2;
+	while (end > begin) {
+		#if DEBUG
+		std::cout << C_GREEN << "[Binary search]" << C_RESET << std::endl <<"Range: " << range << std::endl << "Value: " << value << std::endl << "Pend length: " << this->pend_.size() << std::endl << "Mid idx: " << mid << std::endl;
+		std::cout << "will get idx: " << (mid * this->base_ / 2) + this->base_ / 2 - 1 << std::endl;
+		std::cout << "begin: " << begin << std::endl << "end: " << end << std::endl;
+		std::cout << "comparing: " << value << " and " << this->pend_[(mid * this->base_ / 2) + this->base_ / 2 - 1] << std::endl;
+		#endif	
+		if (isLess(value, this->pend_[(mid * this->base_ / 2) + this->base_ / 2 - 1]))
+			end = mid - 1; // need protection
+		else
+			begin = mid + 1; // need protection
+		mid = (end - begin) / 2;
+	}
+	(void)begin;
+	(void)end;
 }
 
 void PmergeMe::printStacks() const {
