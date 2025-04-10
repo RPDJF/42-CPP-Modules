@@ -122,7 +122,7 @@ void PmergeMe<container>::insertSortInit_() {
 	#if DEBUG
 	std::cout << C_YELLOW << "[Insert sort init]" << C_RESET << std::endl << "Recursion level " << this->level_ << " base " << this->base_ << std::endl;
 	#endif
-	if (this->base_ >= this->sequence_.size()) {
+	if (this->base_ * 2 >= this->sequence_.size()) {
 		this->level_--;
 		this->base_ /= 2;
 		this->element_size_ /= 2;
@@ -132,6 +132,16 @@ void PmergeMe<container>::insertSortInit_() {
 	while (this->sequence_.size() >= this->base_) {
 		this->elementMove(this->sequence_, this->pend_, 0, this->element_size_); // move bx to pend_
 		this->elementMove(this->sequence_, this->main_, 0, this->element_size_); // move ax to main_
+		std::cout << "sequence ";
+		this->printStack_(this->sequence_);
+		std::cout << std::endl;
+		std::cout << "pend ";
+		this->printStack_(this->pend_);
+		std::cout << std::endl;
+		std::cout << "main ";
+		this->printStack_(this->main_);
+		std::cout << std::endl << "sequence size " << this->sequence_.size() << std::endl;
+		std::cout << "element size " << this->element_size_ << std::endl;
 	}
 	if (this->sequence_.size() >= this->element_size_)
 		this->elementMove(this->sequence_, this->pend_, 0, this->element_size_); // move last element if any
@@ -177,11 +187,11 @@ void PmergeMe<container>::insertSort_() {
 	}
 	this->sequence_.clear();
 	this->elementMove(this->main_, this->sequence_, 0, this->main_.size());
-	this->elementMove(this->out_, this->sequence_, 0, this->out_.size());
 	this->level_--;
 	this->base_ /= 2;
 	this->element_size_ /= 2;
 	this->step_ = 2;
+	this->elementMove(this->out_, this->sequence_, 0, this->out_.size());
 }
 
 template <typename container>
