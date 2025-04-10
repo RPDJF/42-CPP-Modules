@@ -11,6 +11,14 @@ size_t PmergeMe<container>::F(size_t n) const {
 }
 
 template <typename container>
+size_t PmergeMe<container>::G(size_t n) const {
+    if (n == 0)
+        return 0;
+    size_t logCeil = static_cast<size_t>(ceil(log2(n)));
+    return n * logCeil - n + 1;
+}
+
+template <typename container>
 PmergeMe<container>::PmergeMe(char **argv, int argc):
 	step_(1),
 	level_(1),
@@ -210,24 +218,27 @@ void PmergeMe<container>::printSequence() const {
 
 template <typename container>
 size_t PmergeMe<container>::binarySearch(unsigned int value, size_t range) {
-	if (range > this->main_.size() / (this->element_size_))
-		range = this->main_.size() / (this->element_size_);
-	
+	if (range > this->main_.size() / this->element_size_)
+		range = this->main_.size() / this->element_size_;
+
 	ssize_t left = 0;
-	ssize_t right = range - 1;
-	while (left <= right) {
-		ssize_t mid = left + (right - left) / 2;
-		size_t targetIndex = (mid * this->element_size_) + this->element_size_ - 1;
-		mid = left + (right - left) / 2;
-		if (isLess(this->main_[targetIndex], value)) {
+	ssize_t right = range;
+
+	while (left < right) {
+		ssize_t mid = (left + right) / 2;
+		const size_t targetIndex = (mid * this->element_size_) + this->element_size_ - 1;
+		const unsigned int target = this->main_[targetIndex];
+
+		// One comparison only!
+		if (isLess(target, value)) {
 			left = mid + 1;
-		}
-		else {
-			right = mid - 1;
+		} else {
+			right = mid;
 		}
 	}
 	return left;
 }
+
 
 template <typename container>
 void PmergeMe<container>::printStacks() const {

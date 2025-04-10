@@ -56,6 +56,7 @@ class PmergeMe {
 		void printSequence() const ;
 		void printStacks() const;
 		size_t F(size_t n) const;
+		size_t G(size_t n) const;
 		size_t getCount() const;
 };
 
