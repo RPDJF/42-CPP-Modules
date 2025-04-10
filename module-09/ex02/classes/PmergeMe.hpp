@@ -2,6 +2,7 @@
 # define PMERGEME_HPP
 
 # include <vector>
+# include <deque>
 # include <sstream>
 # include <iostream>
 # include <memory.h>
@@ -26,7 +27,7 @@ class PmergeMe {
 		void init_(char **argv, int argc);
 		void insertSortInit_();
 		void elementMove(std::vector<unsigned int>& src, std::vector<unsigned int>& dest, size_t idx, size_t size);
-		void binarySearch(unsigned int value, size_t range);
+		size_t binarySearch(unsigned int value, size_t range);
 		void printStack_(const std::vector<unsigned int>& stack) const;
 		template <typename T>
 		bool isLess(T t1, T t2) {
@@ -38,6 +39,11 @@ class PmergeMe {
 			this->count_++;
 			return (t1 > t2);	
 		}
+		template <typename T>
+		bool isEqual(T t1, T t2) {
+			this->count_++;
+			return (t1 == t2);
+		}
 		
 	public:
 		PmergeMe(char **argv, int argc);
@@ -48,8 +54,7 @@ class PmergeMe {
 		const std::vector<unsigned int>& getSequence() const;
 		void printSequence() const ;
 		void printStacks() const;
-
-		
+		size_t F(size_t n) const;
 };
 
 #endif
