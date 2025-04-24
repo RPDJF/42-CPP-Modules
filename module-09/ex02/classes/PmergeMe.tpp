@@ -257,12 +257,12 @@ void PmergeMe<container>::printStacks() const {
 
 template <typename container>
 void PmergeMe<container>::buildSequence() {
-	if (this->step_ == 1 && this->sequence_.size() < 2)
-		return;
 	switch (this->step_) {
 		case 0:
 			return;
 		case 1:
+			if (this->sequence_.size() < 2)
+				return;
 			mergeSort_();
 			break;
 		case 2:

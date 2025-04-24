@@ -46,7 +46,7 @@ endef
 export APP_HEADER
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -Ofast
 
 SRC =	main \
 
@@ -63,6 +63,14 @@ debug: fclean $(CPPFILES)
 		@echo -e "$$APP_HEADER"
 		@printf "\t🤖 Compiling $(NAME)...\r"
 		@$(CC) -g3 $(CPPFILES) $(CFLAGS) -o $(NAME) -D DEBUG=1
+		@printf "\33[2K"
+		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
+		@echo -e "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
+
+debug_silent: fclean $(CPPFILES)
+		@echo -e "$$APP_HEADER"
+		@printf "\t🤖 Compiling $(NAME)...\r"
+		@$(CC) -g3 $(CPPFILES) $(CFLAGS) -o $(NAME)
 		@printf "\33[2K"
 		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
 		@echo -e "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"

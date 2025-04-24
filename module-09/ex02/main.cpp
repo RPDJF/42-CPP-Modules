@@ -6,6 +6,11 @@
 
 int main(int argc, char **argv) {
 	PmergeMe<std::vector<unsigned int> > pm(argv, argc);
+	if (pm.getSequence().size() > 65535) {
+		std::cout << pm.getSequence().size() << std::endl;
+		std::cout << C_RED "[Error] " << C_RESET "You can only use max to 65534 numbers to sort because of recursivity" << std::endl;
+		return 1;
+	}
 	std::cout << "Before:\t";
 	pm.printSequence();
 	clock_t start = clock();
