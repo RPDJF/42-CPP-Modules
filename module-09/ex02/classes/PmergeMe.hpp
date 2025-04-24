@@ -19,8 +19,6 @@ class PmergeMe {
 		unsigned short level_;
 		unsigned short base_;
 		unsigned short element_size_;
-		unsigned short temp_;
-		unsigned short jacob_lv_;
 		unsigned long count_;
 		void mergeSort_();
 		void pairSwap_(unsigned int a1);

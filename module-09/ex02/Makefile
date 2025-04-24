@@ -60,29 +60,29 @@ NAME =	PmergeMe
 all: $(NAME)
 
 debug: fclean $(CPPFILES)
-		@echo "$$APP_HEADER"
+		@echo -e "$$APP_HEADER"
 		@printf "\t🤖 Compiling $(NAME)...\r"
 		@$(CC) -g3 $(CPPFILES) $(CFLAGS) -o $(NAME) -D DEBUG=1
 		@printf "\33[2K"
-		@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
-		@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
+		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
+		@echo -e "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
 
 clean:
 
 fclean: clean
 		@rm -f $(NAME)
-		@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
+		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
 
 re: fclean
 		@$(MAKE) all --no-print-directory
 
 help:
-		@echo "$$HEADER"
-		@echo "all							  -	   Build $(NAME)"
-		@echo "clean							-	   Clean temporary files"
-		@echo "fclean						   -	   Clean the whole build"
-		@echo "debug							-	   Runs the program with g3 fsanitize=address"
-		@echo "$(NAME)				  -	   Build the $(NAME) with necessary libs"
+		@echo -e "$$HEADER"
+		@echo -e "all							  -	   Build $(NAME)"
+		@echo -e "clean							-	   Clean temporary files"
+		@echo -e "fclean						   -	   Clean the whole build"
+		@echo -e "debug							-	   Runs the program with g3 fsanitize=address"
+		@echo -e "$(NAME)				  -	   Build the $(NAME) with necessary libs"
 
 $(CPPFILES): header
 
@@ -92,13 +92,13 @@ $(CPPFILES): header
 		@printf "\33[2K"
 
 $(NAME): $(CPPFILES) $(BETTERFT_LIB)
-		@echo "$$APP_HEADER"
+		@echo -e "$$APP_HEADER"
 		@printf "\t🤖 Compiling $(NAME)...\r"
 		@$(CC) $(CPPFILES) $(CFLAGS) -o $(NAME)
 		@printf "\33[2K"
-		@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅\n"
+		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅\n"
 
 header:
-		@echo "$$HEADER"
+		@echo -e "$$HEADER"
 
 .PHONY = all clean fclean re header help

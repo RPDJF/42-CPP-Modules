@@ -24,7 +24,6 @@ PmergeMe<container>::PmergeMe(char **argv, int argc):
 	level_(1),
 	base_(2),
 	element_size_(1),
-	jacob_lv_(3),
 	count_(0) {
 	this->init_(argv, argc);
 }
@@ -39,7 +38,6 @@ PmergeMe<container>::PmergeMe(const PmergeMe<container>& copy):
 	level_(copy.level_),
 	base_(copy.base_),
 	element_size_(copy.element_size_),
-	jacob_lv_(copy.jacob_lv_),
 	count_(copy.count_) {}
 
 template <typename container>
@@ -57,7 +55,6 @@ PmergeMe<container>& PmergeMe<container>::operator=(const PmergeMe<container>& a
 	this->level_ = assign.level_;
 	this->base_ = assign.base_;
 	this->element_size_ = assign.element_size_;
-	this->jacob_lv_ = assign.jacob_lv_;
 	this->count_ = assign.count_;
 	return *this;
 }
@@ -120,28 +117,12 @@ void PmergeMe<container>::insertSortInit_() {
 		return;
 	}
 	#if DEBUG
-	std::cout << C_YELLOW << "[Insert sort init]" << C_RESET << std::endl << "Recursion level " << this->level_ << " base " << this->base_ << std::endl;
+	std::cout << C_YELLOW << "[Insert sort init]" << C_RESET << std::endl << "Recursion level " << this->level_ << " base " << this->base_;
 	#endif
-	if (this->base_ * 2 >= this->sequence_.size()) {
-		this->level_--;
-		this->base_ /= 2;
-		this->element_size_ /= 2;
-		return;
-	}
 	this->elementMove(this->sequence_, this->main_, 0, this->base_); // move b1 and a1
 	while (this->sequence_.size() >= this->base_) {
 		this->elementMove(this->sequence_, this->pend_, 0, this->element_size_); // move bx to pend_
 		this->elementMove(this->sequence_, this->main_, 0, this->element_size_); // move ax to main_
-		std::cout << "sequence ";
-		this->printStack_(this->sequence_);
-		std::cout << std::endl;
-		std::cout << "pend ";
-		this->printStack_(this->pend_);
-		std::cout << std::endl;
-		std::cout << "main ";
-		this->printStack_(this->main_);
-		std::cout << std::endl << "sequence size " << this->sequence_.size() << std::endl;
-		std::cout << "element size " << this->element_size_ << std::endl;
 	}
 	if (this->sequence_.size() >= this->element_size_)
 		this->elementMove(this->sequence_, this->pend_, 0, this->element_size_); // move last element if any
@@ -154,44 +135,46 @@ void PmergeMe<container>::insertSortInit_() {
 
 static int jacobsthal(int num) {
 	return (std::pow(2, num) - pow(-1, num)) / 3;
+	//return (pow(2, num + 1) + pow(-1, num)) / 3;
 }
 
 template <typename container>
 void PmergeMe<container>::insertSort_() {
-	size_t jac = jacobsthal(this->jacob_lv_);
-	size_t past_jac = jacobsthal(this->jacob_lv_ - 1);
-	size_t insertion = jac - past_jac;
-	size_t range = jac + past_jac - 1;
-	this->jacob_lv_++;
-
-	if (this->level_ == 1)
-		insertion = this->pend_.size();
-	#if DEBUG
-	std::cout << C_MAGENTA << "[Insert sort]" C_RESET << std::endl << "jacobsthal num: " << jac << std::endl << "insertion: " << insertion << std::endl;
-	std::cout << std::endl;
-	#endif
-	for(ssize_t i = insertion; i >= 0; i--) {
-		size_t pend_a = i * this->element_size_;
-		size_t pend_b = pend_a + (this->element_size_ - 1);
-		if (pend_b >= this->pend_.size()) continue;
-		size_t idx = this->binarySearch(this->pend_[pend_b], range);
-		container temp;
-		temp.insert(temp.end(), this->main_.begin(), this->main_.begin() + idx * this->element_size_);
-		temp.insert(temp.end(), this->pend_.begin() + pend_a, this->pend_.begin() + pend_a + this->element_size_);
-		temp.insert(temp.end(), this->main_.begin() + idx * this->element_size_, this->main_.end());
-		typename container::iterator itStart = this->pend_.begin() + pend_a;
-		typename container::iterator itEnd = itStart + this->element_size_;
-		this->pend_.erase(itStart, itEnd);
-		this->main_ = temp;
-
+	size_t jaclv = 3;
+	unsigned int idxBegin;
+	while (!this->pend_.empty()) {
+		size_t jac = jacobsthal(jaclv);
+		size_t past_jac = jacobsthal(jaclv - 1);
+		jaclv++;
+		size_t elem2ins = jac - past_jac; // -> definit la range de pend, depuis 0
+		if (elem2ins > this->pend_.size() / this->element_size_) elem2ins = this->pend_.size() / this->element_size_;
+		// et de cette même range, insérer depuis le dernier jusqu'à vider elem2ins -> ensuite nouvelle boucle -> jac++
+		// si elem2ins > size du pend -> tous les foutre dans l'ordre inverse dans main toujours binary search
+		#if DEBUG
+		std::cout << C_MAGENTA << "[Insert sort]" C_RESET << std::endl << "jacobsthal num: " << jac << std::endl << "elem2ins: " << elem2ins << std::endl;
+		std::cout << std::endl;
+		#endif
+		while (elem2ins > 0) {
+			idxBegin = (elem2ins - 1) * this->element_size_;
+			unsigned int bin = binarySearch(this->pend_.at(idxBegin + this->element_size_ - 1), pow(2, (jaclv + 1)) - 1);
+			container temp;
+			temp.insert(temp.end(), this->main_.begin(), this->main_.begin() + bin * this->element_size_);
+			temp.insert(temp.end(), this->pend_.begin() + idxBegin, this->pend_.begin() + idxBegin + this->element_size_);
+			temp.insert(temp.end(), this->main_.begin() + bin * this->element_size_, this->main_.end());
+			typename container::iterator itStart = this->pend_.begin() + idxBegin;
+			typename container::iterator itEnd = itStart + this->element_size_;
+			this->pend_.erase(itStart, itEnd);
+			this->main_ = temp;
+			elem2ins--;
+		}
 	}
 	this->sequence_.clear();
+	this->elementMove(this->out_, this->main_, 0, this->out_.size());
 	this->elementMove(this->main_, this->sequence_, 0, this->main_.size());
 	this->level_--;
 	this->base_ /= 2;
 	this->element_size_ /= 2;
 	this->step_ = 2;
-	this->elementMove(this->out_, this->sequence_, 0, this->out_.size());
 }
 
 template <typename container>
@@ -202,6 +185,7 @@ void PmergeMe<container>::printStack_(const container& stack) const {
 	}
 	bool isswitch = false;
 	const char *cswitch = C_RESET;
+	(void)cswitch;
 	for(typename container::const_iterator it = stack.begin(); it != stack.end(); it++) {
 		isswitch = !((it - stack.begin()) % ((this->element_size_) ? this->element_size_ : 1));
 		#if DEBUG
@@ -214,10 +198,18 @@ void PmergeMe<container>::printStack_(const container& stack) const {
 		#endif
 		std::cout << *it;
 		if (it + 1 != stack.end()) {
-			std::cout << C_RESET << " " << cswitch;
+			#if DEBUG
+			std::cout << C_RESET;
+			#endif
+			std::cout << " ";
+			#if DEBUG
+			std::cout << cswitch;
+			#endif
 		}
 	}
+	#if DEBUG
 	std::cout << C_RESET;
+	#endif
 }
 
 template <typename container>
@@ -238,17 +230,19 @@ size_t PmergeMe<container>::binarySearch(unsigned int value, size_t range) {
 		ssize_t mid = (left + right) / 2;
 		const size_t targetIndex = (mid * this->element_size_) + this->element_size_ - 1;
 		const unsigned int target = this->main_[targetIndex];
-
-		// One comparison only!
 		if (isLess(target, value)) {
 			left = mid + 1;
 		} else {
 			right = mid;
 		}
 	}
+	/*if (isEqual((size_t)left, range)) {
+		return left + 1;
+	}*/
 	return left;
 }
 
+// doit donner l'index de l'élément à remplacer
 
 template <typename container>
 void PmergeMe<container>::printStacks() const {

@@ -16,7 +16,6 @@ int main(int argc, char **argv) {
 	pm.printSequence();
 	std::cout << "Count of comparators:\t" << (pm.getCount() < pm.G(pm.getSequence().size()) ? C_GREEN : C_RED) << pm.getCount() << C_RESET << std::endl;
 	std::cout << "Best case possible:\t" << C_GREEN << pm.F(pm.getSequence().size()) << C_RESET << std::endl;
-	std::cout << "Worst case possible:\t" << C_RED << pm.G(pm.getSequence().size()) << C_RESET << std::endl;
 	std::cout << "Time to process a range of " << pm.getSequence().size() << " numbers with " << C_CYAN << "std::vector" << C_RESET << ":\t" << std::fixed << std::setprecision(6) << (double)duration / CLOCKS_PER_SEC << "s" << std::endl;
 	
 	PmergeMe<std::deque<unsigned int> > pm2(argv, argc);
