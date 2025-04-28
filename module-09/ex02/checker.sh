@@ -1,5 +1,6 @@
 #!/bin/bash
 
+make
 if [ $# -ge 1 ]; then
 	echo -e "\e[32m### PmergeMe with \e[34m$1\e[32m random numbers ###\e[0m"
 	./PmergeMe `shuf -i 1-$1 -n $1 | tr "\n" " "` > temp.txt
