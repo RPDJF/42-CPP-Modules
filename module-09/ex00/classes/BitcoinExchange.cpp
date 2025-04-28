@@ -58,6 +58,8 @@ BitcoinExchange::~BitcoinExchange() {
 }
 
 const std::map<std::string, double>::const_iterator BitcoinExchange::retrieveData(const std::string& key) const {
+	if (this->db_.find(key) != this->db_.end())
+		return this->db_.find(key);
 	std::map<std::string, double>::const_iterator it = this->db_.lower_bound(key);
 	if (it == this->db_.begin() || it == this->db_.end())
 		return this->db_.end();
